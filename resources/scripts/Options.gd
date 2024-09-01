@@ -2,8 +2,7 @@ extends Control
 
 
 func _ready():
-	for i in range(1):
-		await get_tree().process_frame
+	await get_tree().process_frame
 	
 	var atarget
 	var mtarget

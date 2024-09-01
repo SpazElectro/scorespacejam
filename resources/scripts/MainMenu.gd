@@ -8,7 +8,6 @@ var music_player: AudioStreamPlayer
 static var instance: MainMenu
 
 func _ready():
-	print("-i am him-")
 	instance = self
 	
 	$Options/Audio.value = Shared.get_real_aud_vol()
