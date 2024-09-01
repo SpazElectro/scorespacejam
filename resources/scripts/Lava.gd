@@ -20,7 +20,7 @@ func _process(delta):
 	if is_in_space:
 		if abs(lava_y-player_y) >= 900 and abs(gradual_space_increase) >= 100:
 			World.instance.fade_to_thank_you()
-		position.y = player_y+100-gradual_space_increase
+		position.y = lerp(position.y, player_y+100-gradual_space_increase, 0.5)
 		gradual_space_increase += -(delta*40) if has_hit else delta*10
 		return
 	if player_y > lava_y:

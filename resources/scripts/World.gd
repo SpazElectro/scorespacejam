@@ -104,11 +104,6 @@ func generate_content_below(asdf, p, player_y: float):
 			return
 		elif times_generated > 3:
 			return
-	else:
-		for i in range(10):
-			$UI/Destination.visible = true
-			await get_tree().create_timer(0.1).timeout
-			$UI/Destination.visible = false
 	
 	# change background
 	var old
@@ -167,6 +162,13 @@ func generate_content_below(asdf, p, player_y: float):
 	point.connect("area_entered", generate_content_below.bind(point, _player_y + 1), CONNECT_DEFERRED)
 	add_child(point)
 	times_generated += 1
+	
+	if Shared.get_gamemode() == Shared.GAMEMODE.NORMAL and times_generated > 1:
+		for i in range(10):
+			await get_tree().create_timer(0.15).timeout
+			$UI/Destination.visible = true
+			await get_tree().create_timer(0.15).timeout
+			$UI/Destination.visible = false
 
 func _process(delta):
 	var step = 100 * abs(score-_score) * delta

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ducq0jguonwky"]
+[gd_scene load_steps=7 format=3 uid="uid://ducq0jguonwky"]
 
 [ext_resource type="Script" path="res://resources/scripts/Options.gd" id="1_0nnhk"]
 [ext_resource type="Theme" uid="uid://bur45gcdny8mk" path="res://resources/default.tres" id="1_5nqp0"]
@@ -10,6 +10,10 @@ font = ExtResource("2_82rha")
 font_size = 36
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_553yw"]
+font = ExtResource("2_82rha")
+font_color = Color(1, 0.494118, 0, 1)
 
 [node name="Options" type="Control"]
 process_mode = 3
@@ -82,3 +86,14 @@ offset_left = 4.0
 offset_top = 226.0
 offset_right = 4.0
 offset_bottom = 226.0
+
+[node name="FreakyWarning" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_top = 179.0
+offset_right = 300.0
+offset_bottom = 230.0
+text = "WARNING: FREAKY MODE IS ENABLED
+ALL SCORES WILL NOT BE SUBMITTED
+UNTIL THE GAME RESTARTS"
+label_settings = SubResource("LabelSettings_553yw")

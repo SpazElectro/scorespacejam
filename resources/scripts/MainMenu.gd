@@ -22,6 +22,7 @@ func _ready():
 		music_player = get_parent().get_node("MusicPlayer")
 	
 	$Main/FreakyMode.visible = Shared.freaky_mode
+	$Options/FreakyWarning.visible = Shared.did_freaky_mode
 	
 	await get_tree().process_frame
 	await get_tree().process_frame
@@ -39,8 +40,10 @@ func _on_game_name_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.pressed:
 			$Main/FreakyMode.visible = not $Main/FreakyMode.visible
+			$Options/FreakyWarning.visible = true
 			Shared.freaky_mode = $Main/FreakyMode.visible
 			Shared.did_freaky_mode = true
+			
 			if Shared.freaky_mode:
 				Console.enable()
 			else:

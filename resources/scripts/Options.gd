@@ -39,6 +39,8 @@ func _ready():
 	$Audio.value = Shared.get_real_aud_vol()
 	$Music.value = Shared.get_real_mus_vol()
 	
+	if Shared.freaky_mode:
+		$FreakyWarning.visible = true
 	#Shared.update_music()
 
 func _input(event):
