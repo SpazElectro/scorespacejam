@@ -62,3 +62,8 @@ func _on_gamemode_normal_pressed():
 func _on_gamemode_endless_pressed():
 	Shared._gamemode = Shared.GAMEMODE.ENDLESS
 	get_tree().change_scene_to_packed(main_scene)
+
+
+func _on_back_pressed2():
+	if not $AnimationPlayer.is_playing():
+		$AnimationPlayer.play("close_gamemodes")

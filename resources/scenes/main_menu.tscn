@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://bel7jmcgldwwf"]
+[gd_scene load_steps=17 format=3 uid="uid://bel7jmcgldwwf"]
 
 [ext_resource type="Script" path="res://resources/scripts/MainMenu.gd" id="1_r8ul0"]
 [ext_resource type="Texture2D" uid="uid://csm13uwlsfiur" path="res://assets/backgrounds/backgroundCastles.png" id="2_g5tid"]
 [ext_resource type="Theme" uid="uid://bur45gcdny8mk" path="res://resources/default.tres" id="3_q8oob"]
 [ext_resource type="FontFile" uid="uid://dcy4tcp1un3hm" path="res://assets/VCR_OSD_MONO_1.001.ttf" id="4_2disp"]
 [ext_resource type="AudioStream" uid="uid://ef54mpq38hu5" path="res://resources/audio/music.tres" id="5_7s6u2"]
+[ext_resource type="PackedScene" uid="uid://ducq0jguonwky" path="res://resources/scenes/options.tscn" id="5_ulgmh"]
 
 [sub_resource type="Animation" id="Animation_qfx74"]
 length = 0.001
@@ -69,9 +70,26 @@ tracks/0/keys = {
 "values": [Vector2(0, 0), Vector2(-512, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_dig75"]
+resource_name = "close_gamemodes"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector2(512, 0), Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bkv1u"]
 _data = {
 "RESET": SubResource("Animation_qfx74"),
+"close_gamemodes": SubResource("Animation_dig75"),
 "close_options": SubResource("Animation_kbhuq"),
 "open_gamemodes": SubResource("Animation_h4gyy"),
 "open_options": SubResource("Animation_uii4t")
@@ -103,12 +121,6 @@ outline_color = Color(0, 0, 0, 1)
 font = ExtResource("4_2disp")
 font_size = 32
 outline_size = 4
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_bgir4"]
-font = ExtResource("4_2disp")
-font_size = 36
-outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
 [node name="MainMenu" type="Control"]
@@ -165,7 +177,7 @@ offset_top = 64.0
 offset_right = 511.0
 offset_bottom = 107.0
 mouse_filter = 1
-text = "Lava Tower"
+text = "Placeholder"
 label_settings = SubResource("LabelSettings_fwf2c")
 horizontal_alignment = 1
 
@@ -181,6 +193,8 @@ pivot_offset = Vector2(255, 21)
 text = "freaky mode"
 label_settings = SubResource("LabelSettings_d3hhk")
 horizontal_alignment = 1
+
+[node name="Options" parent="." instance=ExtResource("5_ulgmh")]
 
 [node name="GamemodeSelect" type="Control" parent="."]
 anchors_preset = 0
@@ -250,51 +264,13 @@ label_settings = SubResource("LabelSettings_2lgnr")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="Options" type="Control" parent="."]
-anchors_preset = 0
-offset_left = -512.0
-offset_right = -512.0
-
-[node name="Back" type="Button" parent="Options"]
+[node name="Back" type="Button" parent="GamemodeSelect"]
 layout_mode = 0
-offset_right = 512.0
+offset_left = 512.0
+offset_right = 1024.0
 offset_bottom = 50.0
 theme = ExtResource("3_q8oob")
 text = "Back"
-
-[node name="Audio" type="HSlider" parent="Options"]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 80.0
-offset_right = 234.0
-offset_bottom = 110.0
-step = 5.0
-value = 100.0
-
-[node name="Label" type="Label" parent="Options/Audio"]
-layout_mode = 0
-offset_top = -24.0
-offset_right = 256.0
-offset_bottom = 8.0
-text = "Audio"
-label_settings = SubResource("LabelSettings_bgir4")
-
-[node name="Music" type="HSlider" parent="Options"]
-layout_mode = 0
-offset_left = 256.0
-offset_top = 80.0
-offset_right = 499.0
-offset_bottom = 110.0
-step = 5.0
-value = 100.0
-
-[node name="Label" type="Label" parent="Options/Music"]
-layout_mode = 0
-offset_top = -24.0
-offset_right = 256.0
-offset_bottom = 8.0
-text = "Music"
-label_settings = SubResource("LabelSettings_bgir4")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
@@ -308,6 +284,4 @@ stream = ExtResource("5_7s6u2")
 [connection signal="gui_input" from="Main/GameName" to="." method="_on_game_name_gui_input"]
 [connection signal="pressed" from="GamemodeSelect/Normal" to="." method="_on_gamemode_normal_pressed"]
 [connection signal="pressed" from="GamemodeSelect/Endless" to="." method="_on_gamemode_endless_pressed"]
-[connection signal="pressed" from="Options/Back" to="." method="_on_back_pressed"]
-[connection signal="drag_ended" from="Options/Audio" to="." method="_on_audio_drag_ended"]
-[connection signal="drag_ended" from="Options/Music" to="." method="_on_music_drag_ended"]
+[connection signal="pressed" from="GamemodeSelect/Back" to="." method="_on_back_pressed2"]
