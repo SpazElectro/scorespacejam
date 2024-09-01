@@ -50,6 +50,7 @@ func fade_to_thank_you():
 	if thank_you:
 		return
 	thank_you = true
+	$FadeLayer.visible = true
 	var tween = get_tree().create_tween()
 	tween.tween_property($UI/Subtitle, "visible_ratio", 1, 3.0)
 	tween.tween_property(get_parent().get_node("MusicPlayer"), "volume_db", -50.0, 3.0)
@@ -269,6 +270,4 @@ func on_retry():
 var main_menu: PackedScene = preload("res://resources/scenes/mainmenu.tscn")
 
 func _on_play_pressed():
-	print(main_menu)
 	get_tree().change_scene_to_packed(main_menu)
-	#breakpoint

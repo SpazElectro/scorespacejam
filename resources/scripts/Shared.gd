@@ -23,6 +23,8 @@ func _save_settings():
 	if error != OK:
 		print("Failed trying to save settings! error: %d" % [error])
 
+func update_music():
+	get_parent().get_node("MusicPlayer").volume_db = get_mus_vol()
 func get_gamemode():
 	return _gamemode
 func get_real_aud_vol() -> int:

@@ -9,6 +9,9 @@ func _ready():
 	Console.add_command("up", up, ["amount"])
 	Console.add_command("reset", reset)
 	Console.add_command("menu", menu)
+	Console.add_command("music", music)
+	Console.add_command("audio", audio)
+	
 
 func teleport(x, y):
 	x = int(x)
@@ -27,3 +30,15 @@ func reset():
 
 func menu():
 	get_tree().change_scene_to_packed(main_menu)
+
+func music():
+	if Shared.get_real_mus_vol() != 0:
+		Shared.set_mus_vol(0)
+	else:
+		Shared.set_mus_vol(100)
+	Shared.update_music()
+func audio():
+	if Shared.get_real_aud_vol() != 0:
+		Shared.set_aud_vol(0)
+	else:
+		Shared.set_aud_vol(100)

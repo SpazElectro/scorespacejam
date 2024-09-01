@@ -23,16 +23,27 @@ func _process(delta):
 		position.y = player_y+100-gradual_space_increase
 		gradual_space_increase += -(delta*40) if has_hit else delta*10
 		return
-	if lava_y < player_y + offset_above_player:
+	if player_y > lava_y:
+		print("UBEr")
 		position.y = player_y + offset_above_player
 		return
 	
 	var distance_to_player = abs(player_y - lava_y)
 	var adjusted_multiplier = speed_multiplier
 	if distance_to_player < slow_down_distance:
-		adjusted_multiplier *= distance_to_player / slow_down_distance
+		#adjusted_multiplier /= 2
+		pass
 	
-	var adjusted_speed = base_speed * (1 + (adjusted_multiplier * (1.0 - player_y / get_viewport_rect().size.y)))
+	var adjusted_speed = base_speed * (
+		1 + (
+			adjusted_multiplier #*
+			#(
+			#	1.0 -
+			#	player_y / get_viewport_rect().size.y
+			#)
+		)
+	)
+	
 	position.y -= adjusted_speed * delta
 
 func _on_area_entered(area):

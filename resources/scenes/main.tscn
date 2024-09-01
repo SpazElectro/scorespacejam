@@ -442,6 +442,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_ma02g")
 text = "Retry"
 
 [node name="FadeLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="FadeLayer"]
 offset_right = 512.0

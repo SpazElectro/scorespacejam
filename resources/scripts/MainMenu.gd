@@ -19,13 +19,15 @@ func _ready():
 	music_player = get_node("MusicPlayer")
 	if not get_parent().has_node("MusicPlayer"):
 		music_player.reparent.call_deferred(get_parent())
-		music_player.volume_db = Shared.get_mus_vol()
 		music_player.play()
 	else:
 		music_player.queue_free()
 		music_player = get_parent().get_node("MusicPlayer")
-		print(music_player)
 	
+	await get_tree().process_frame
+	await get_tree().process_frame
+	
+	Shared.update_music()
 	var tween = get_tree().create_tween()
 	tween.tween_property(music_player, "volume_db", 0.0, 3.0)
 	tween.play()
