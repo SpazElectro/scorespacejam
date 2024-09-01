@@ -30,7 +30,8 @@ static var instance: World
 @onready var coin_template = $Coins/CoinTemplate
 @onready var coins_container = $Coins
 @onready var jump_pads_container = $JumpPads
-@export var chunk_size = 300
+
+var chunk_size = 300
 
 var jump_pad_scene: PackedScene = preload("res://resources/scenes/jump_pad.tscn")
 
@@ -44,6 +45,8 @@ func _ready():
 	#create_platform(15, 18, 3)
 	if spawn_point:
 		local_player.position = spawn_point
+	if Shared.get_gamemode() == Shared.GAMEMODE.NORMAL:
+		chunk_size = 800
 
 var thank_you = false
 func fade_to_thank_you():
@@ -242,7 +245,6 @@ func create_platform(x: int, y: int, width: int):
 	return coin.global_position
 
 func create_walls(from: int, to: int):
-	# 7 2
 	for y in range(from, to):
 		set_cell(-1, y, 7, 2)
 		set_cell(16, y, 7, 2)
@@ -266,8 +268,5 @@ func update_health():
 func on_retry():
 	get_tree().reload_current_scene()
 
-
-var main_menu: PackedScene = preload("res://resources/scenes/mainmenu.tscn")
-
 func _on_play_pressed():
-	get_tree().change_scene_to_packed(main_menu)
+	get_tree().change_scene_to_packed(Commands.main_menu)

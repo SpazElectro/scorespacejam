@@ -77,6 +77,8 @@ func _on_leaderboard_request_completed(_result, response_code, _headers, body):
 
 
 func _upload_score(score: int):
+	if Shared.did_freaky_mode or Shared.freaky_mode:
+		return
 	var data = { "score": str(score) }
 	var headers = ["Content-Type: application/json", "x-session-token:"+session_token]
 	submit_score_http = HTTPRequest.new()

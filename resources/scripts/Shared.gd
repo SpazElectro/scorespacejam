@@ -5,17 +5,26 @@ enum GAMEMODE {
 }
 
 var _gamemode = GAMEMODE.ENDLESS
-var settings = {}
 var config = ConfigFile.new()
+var loaded_settings = false
+
+var freaky_mode = false
+var did_freaky_mode = false
 
 func _ready():
-	var error = config.load("user://settings.cfg")
-
-	if error != OK:
-		_save_settings()
+	_load_settings()
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		_save_settings()
+
+func _load_settings():
+	if loaded_settings:
+		return
+	loaded_settings = true
+	var error = config.load("user://settings.cfg")
+	
+	if error != OK:
 		_save_settings()
 
 func _save_settings():
@@ -24,7 +33,9 @@ func _save_settings():
 		print("Failed trying to save settings! error: %d" % [error])
 
 func update_music():
+	_load_settings()
 	get_parent().get_node("MusicPlayer").volume_db = get_mus_vol()
+
 func get_gamemode():
 	return _gamemode
 func get_real_aud_vol() -> int:

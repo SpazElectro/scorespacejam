@@ -1,26 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://bel7jmcgldwwf"]
+[gd_scene load_steps=16 format=3 uid="uid://bel7jmcgldwwf"]
 
-[ext_resource type="Texture2D" uid="uid://csm13uwlsfiur" path="res://assets/backgrounds/backgroundCastles.png" id="1_ihxd7"]
-[ext_resource type="Script" path="res://resources/scripts/MainMenu.gd" id="1_kughj"]
-[ext_resource type="Theme" uid="uid://bur45gcdny8mk" path="res://resources/default.tres" id="2_7ray0"]
-[ext_resource type="FontFile" uid="uid://dcy4tcp1un3hm" path="res://assets/VCR_OSD_MONO_1.001.ttf" id="3_yigb5"]
-[ext_resource type="AudioStream" uid="uid://ef54mpq38hu5" path="res://resources/audio/music.tres" id="5_g0oc7"]
-
-[sub_resource type="Animation" id="Animation_uii4t"]
-resource_name = "open_options"
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(-2, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(-512, 0)]
-}
+[ext_resource type="Script" path="res://resources/scripts/MainMenu.gd" id="1_r8ul0"]
+[ext_resource type="Texture2D" uid="uid://csm13uwlsfiur" path="res://assets/backgrounds/backgroundCastles.png" id="2_g5tid"]
+[ext_resource type="Theme" uid="uid://bur45gcdny8mk" path="res://resources/default.tres" id="3_q8oob"]
+[ext_resource type="FontFile" uid="uid://dcy4tcp1un3hm" path="res://assets/VCR_OSD_MONO_1.001.ttf" id="4_2disp"]
+[ext_resource type="AudioStream" uid="uid://ef54mpq38hu5" path="res://resources/audio/music.tres" id="5_7s6u2"]
 
 [sub_resource type="Animation" id="Animation_qfx74"]
 length = 0.001
@@ -69,6 +53,22 @@ tracks/0/keys = {
 "values": [Vector2(0, 0), Vector2(512, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_uii4t"]
+resource_name = "open_options"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-512, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bkv1u"]
 _data = {
 "RESET": SubResource("Animation_qfx74"),
@@ -78,27 +78,35 @@ _data = {
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_fwf2c"]
-font = ExtResource("3_yigb5")
+font = ExtResource("4_2disp")
 font_size = 48
 font_color = Color(0, 0, 0, 1)
 outline_size = 5
 shadow_size = 5
 shadow_color = Color(0, 0, 0, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_d3hhk"]
+font = ExtResource("4_2disp")
+font_size = 32
+font_color = Color(1, 0, 0, 1)
+outline_size = 5
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_7kayk"]
-font = ExtResource("3_yigb5")
+font = ExtResource("4_2disp")
 font_size = 48
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_2lgnr"]
-font = ExtResource("3_yigb5")
+font = ExtResource("4_2disp")
 font_size = 32
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_bgir4"]
-font = ExtResource("3_yigb5")
+font = ExtResource("4_2disp")
 font_size = 36
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
@@ -110,13 +118,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_kughj")
+script = ExtResource("1_r8ul0")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="Background" type="Sprite2D" parent="ParallaxBackground"]
 position = Vector2(256, 320)
-texture = ExtResource("1_ihxd7")
+texture = ExtResource("2_g5tid")
 region_rect = Rect2(0, 0, 1024, 1024)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -132,7 +140,7 @@ layout_mode = 0
 offset_top = 240.0
 offset_right = 512.0
 offset_bottom = 290.0
-theme = ExtResource("2_7ray0")
+theme = ExtResource("3_q8oob")
 text = "Play"
 
 [node name="Options" type="Button" parent="Main"]
@@ -140,7 +148,7 @@ layout_mode = 0
 offset_top = 295.0
 offset_right = 512.0
 offset_bottom = 345.0
-theme = ExtResource("2_7ray0")
+theme = ExtResource("3_q8oob")
 text = "Options"
 
 [node name="Exit" type="Button" parent="Main"]
@@ -148,7 +156,7 @@ layout_mode = 0
 offset_top = 350.0
 offset_right = 512.0
 offset_bottom = 400.0
-theme = ExtResource("2_7ray0")
+theme = ExtResource("3_q8oob")
 text = "Quit"
 
 [node name="GameName" type="Label" parent="Main"]
@@ -159,6 +167,19 @@ offset_bottom = 107.0
 mouse_filter = 1
 text = "Lava Tower"
 label_settings = SubResource("LabelSettings_fwf2c")
+horizontal_alignment = 1
+
+[node name="FreakyMode" type="Label" parent="Main"]
+visible = false
+layout_mode = 0
+offset_left = -8.0
+offset_top = 75.0
+offset_right = 503.0
+offset_bottom = 118.0
+rotation = -0.122173
+pivot_offset = Vector2(255, 21)
+text = "freaky mode"
+label_settings = SubResource("LabelSettings_d3hhk")
 horizontal_alignment = 1
 
 [node name="GamemodeSelect" type="Control" parent="."]
@@ -181,7 +202,7 @@ offset_left = 512.0
 offset_top = 226.0
 offset_right = 769.0
 offset_bottom = 432.0
-theme = ExtResource("2_7ray0")
+theme = ExtResource("3_q8oob")
 theme_override_font_sizes/font_size = 48
 
 [node name="Label" type="Label" parent="GamemodeSelect/Normal"]
@@ -208,7 +229,7 @@ offset_left = 769.0
 offset_top = 226.0
 offset_right = 1026.0
 offset_bottom = 432.0
-theme = ExtResource("2_7ray0")
+theme = ExtResource("3_q8oob")
 theme_override_font_sizes/font_size = 48
 
 [node name="Label" type="Label" parent="GamemodeSelect/Endless"]
@@ -238,7 +259,7 @@ offset_right = -512.0
 layout_mode = 0
 offset_right = 512.0
 offset_bottom = 50.0
-theme = ExtResource("2_7ray0")
+theme = ExtResource("3_q8oob")
 text = "Back"
 
 [node name="Audio" type="HSlider" parent="Options"]
@@ -279,7 +300,7 @@ label_settings = SubResource("LabelSettings_bgir4")
 anchor_mode = 0
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_g0oc7")
+stream = ExtResource("5_7s6u2")
 
 [connection signal="pressed" from="Main/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Main/Options" to="." method="_on_options_pressed"]

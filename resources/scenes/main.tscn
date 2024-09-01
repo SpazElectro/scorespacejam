@@ -475,10 +475,10 @@ autowrap_mode = 2
 
 [node name="Label2" type="Label" parent="FadeLayer/ThankYou"]
 layout_mode = 0
-offset_top = 595.0
+offset_top = 565.0
 offset_right = 512.0
-offset_bottom = 618.0
-text = "sorry for the lame ending"
+offset_bottom = 614.0
+text = "thank you gorillagamer69 for ultrakill <3"
 label_settings = SubResource("LabelSettings_q5ye0")
 horizontal_alignment = 1
 autowrap_mode = 2

@@ -1,9 +1,10 @@
 extends Node
 
-var main_menu: PackedScene = preload("res://resources/scenes/mainmenu.tscn")
+var main_menu: PackedScene = preload("res://resources/scenes/main_menu.tscn")
 
 func _ready():
 	Console.pause_enabled = true
+	Console.disable()
 	Console.add_command("teleport", teleport, ["x", "y"], 2)
 	Console.add_command("kill", kill)
 	Console.add_command("up", up, ["amount"])

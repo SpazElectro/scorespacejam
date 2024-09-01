@@ -28,11 +28,6 @@ func _ready():
 	await get_tree().process_frame
 	
 	Shared.update_music()
-	var tween = get_tree().create_tween()
-	tween.tween_property(music_player, "volume_db", 0.0, 3.0)
-	tween.play()
-	await tween.finished
-	
 
 func _on_play_pressed():
 	$AnimationPlayer.play("open_gamemodes")
@@ -44,9 +39,13 @@ func _on_exit_pressed():
 func _on_game_name_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.pressed:
-			print("pressed on title")
-			# TODO easter egg
-			
+			$Main/FreakyMode.visible = not $Main/FreakyMode.visible
+			Shared.freaky_mode = $Main/FreakyMode.visible
+			Shared.did_freaky_mode = true
+			if Shared.freaky_mode:
+				Console.enable()
+			else:
+				Console.disable()
 
 func _on_back_pressed():
 	if not $AnimationPlayer.is_playing():

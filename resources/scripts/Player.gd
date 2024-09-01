@@ -29,6 +29,15 @@ var health = max_health:
 
 func _ready():
 	$ShotgunSound.volume_db = Shared.get_aud_vol()
+	if Shared.freaky_mode:
+		speed = 800
+		shoot_timer = 0
+		recoil = 200
+		walljump_force = 40_000
+		dash_power = 45_000
+		max_jumps = 500
+		max_dashes = 500
+		max_speed = 10_000
 
 func _process(delta):
 	if not is_on_floor():
