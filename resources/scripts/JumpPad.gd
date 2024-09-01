@@ -2,6 +2,7 @@ extends StaticBody2D
 
 # TODO add ability to kill snowmen
 func _ready():
+	$AudioStreamPlayer2D.volume_db = Shared.get_aud_vol()
 	$Area2D.connect("area_entered", _on_area_entered)
 	$AnimatedSprite2D.play("default")
 

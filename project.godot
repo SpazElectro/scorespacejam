@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="scorespace jam"
-run/main_scene="res://resources/scenes/main.tscn"
+run/main_scene="res://resources/scenes/mainmenu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Console="*res://addons/console/console.gd"
+Shared="*res://resources/scripts/Shared.gd"
 
 [display]
 

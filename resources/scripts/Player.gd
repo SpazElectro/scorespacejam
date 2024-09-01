@@ -27,6 +27,9 @@ var health = max_health:
 		health = value
 		World.instance.update_health()
 
+func _ready():
+	$ShotgunSound.volume_db = Shared.get_aud_vol()
+
 func _process(delta):
 	if not is_on_floor():
 		velocity.y += gravity*delta
@@ -133,8 +136,11 @@ func damage(amount: int):
 
 func kill():
 	health = 0
+	velocity.x = 0
+	velocity.y = 0
+	
 	Leaderboards.instance._upload_score(World.instance.score)
-	print(Leaderboards.instance._get_leaderboards())
+	Leaderboards.instance._get_leaderboards()
 
 func _on_dash_timer_timeout():
 	dashes = min(dashes+1, max_dashes)

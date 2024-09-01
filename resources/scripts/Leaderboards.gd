@@ -46,7 +46,7 @@ func _authentication_request():
 	auth_http.request("https://api.lootlocker.io/game/v2/session/guest", headers, HTTPClient.METHOD_POST, JSON.stringify(data))
 	
 
-func _on_authentication_request_completed(result, response_code, headers, body):
+func _on_authentication_request_completed(_result, _response_code, _headers, body):
 	var json = JSON.new()
 	json.parse(body.get_string_from_utf8())
 	var file = FileAccess.open("user://LootLocker.data", FileAccess.WRITE)
@@ -67,7 +67,7 @@ func _get_leaderboards():
 	leaderboard_http.request_completed.connect(_on_leaderboard_request_completed)
 	leaderboard_http.request(url, headers, HTTPClient.METHOD_GET, "")
 
-func _on_leaderboard_request_completed(result, response_code, headers, body):
+func _on_leaderboard_request_completed(_result, response_code, _headers, body):
 	if response_code == 403:
 		return
 	var json = JSON.new()
@@ -88,6 +88,6 @@ func _upload_score(score: int):
 	submit_score_http.request_completed.connect(_on_upload_score_request_completed)
 	submit_score_http.request("https://api.lootlocker.io/game/leaderboards/"+leaderboard_key+"/submit", headers, HTTPClient.METHOD_POST, JSON.stringify(data))
 
-func _on_upload_score_request_completed(result, response_code, headers, body) :
+func _on_upload_score_request_completed(_result, _response_code, _headers, body) :
 	var json = JSON.new()
 	json.parse(body.get_string_from_utf8())

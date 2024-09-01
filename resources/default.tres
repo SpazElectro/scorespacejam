@@ -1,0 +1,46 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://bur45gcdny8mk"]
+
+[ext_resource type="FontFile" uid="uid://dcy4tcp1un3hm" path="res://assets/VCR_OSD_MONO_1.001.ttf" id="1_ynp7n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iwhbj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ab4h6"]
+bg_color = Color(0, 0.282353, 0.733333, 1)
+border_width_bottom = 6
+border_color = Color(0, 0.282863, 0.735207, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.498039)
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n52bt"]
+bg_color = Color(0, 0.396078, 1, 1)
+border_width_bottom = 6
+border_color = Color(0, 0.282863, 0.735207, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.498039)
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2c1ro"]
+bg_color = Color(5.29438e-07, 0.208769, 0.56138, 1)
+border_width_bottom = 6
+border_color = Color(6.257e-07, 0.199106, 0.539315, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.498039)
+shadow_size = 3
+
+[resource]
+default_font = ExtResource("1_ynp7n")
+default_font_size = 18
+Button/styles/focus = SubResource("StyleBoxEmpty_iwhbj")
+Button/styles/hover = SubResource("StyleBoxFlat_ab4h6")
+Button/styles/normal = SubResource("StyleBoxFlat_n52bt")
+Button/styles/pressed = SubResource("StyleBoxFlat_2c1ro")

@@ -1,11 +1,26 @@
 extends Node2D
 class_name World
 
+# hey traveller
+var splashes = [
+	":3",
+	"aw dang it",
+	"🍅",
+	"😎",
+	"😢",
+	"assets from kenney.nl!",
+	"you can do better next time!",
+	"for scorespace #31!",
+	"leaderboards powered by lootlocker!",
+	"powered by godot!",
+	"the floor is lava!"
+]
+
 var coins = 0
 var _score = 0
 var score = 0:
 	get:
-		return (-local_player.position.y+583) + (coins*100)
+		return (-local_player.position.y+324) + (coins*100)
 
 static var instance: World
 
@@ -43,6 +58,7 @@ func generate_content_below(asdf, p, player_y: float):
 		while previous_x == new_x:
 			new_x = randi_range(0, 16)
 		
+		@warning_ignore("unassigned_variable")
 		if not pl:
 			pl = create_platform(new_x, y, randi_range(1, 6))
 		else:
@@ -52,7 +68,7 @@ func generate_content_below(asdf, p, player_y: float):
 	if p:
 		p.queue_free()
 	
-	create_walls(player_y-200, abs(player_y)+200)
+	create_walls(int(player_y-200), int(abs(player_y)+200))
 	
 	print("Generated at ", player_y)
 	var point = genpointtemplate.duplicate()
@@ -181,6 +197,7 @@ func update_health():
 			health_node.region_rect = no_heart_rect
 	
 	if local_player.health == 0:
+		$UI/DeadMenu/SplashLabel.text = splashes.pick_random()
 		$UI/DeadMenu.visible = true
 		$Lava.base_speed = 0
 
