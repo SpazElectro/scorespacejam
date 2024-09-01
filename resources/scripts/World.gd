@@ -111,7 +111,7 @@ func generate_content_below(asdf, p, player_y: float):
 		get_tree().create_timer(duration).timeout.connect(old.hide)
 	
 	var _player_y = player_y
-	player_y *= -120
+	player_y *= int((-120)*(float(chunk_size)/100.0))
 	var previous_x = 0
 	var pl
 	
@@ -269,4 +269,6 @@ func on_retry():
 var main_menu: PackedScene = preload("res://resources/scenes/mainmenu.tscn")
 
 func _on_play_pressed():
+	print(main_menu)
 	get_tree().change_scene_to_packed(main_menu)
+	#breakpoint
