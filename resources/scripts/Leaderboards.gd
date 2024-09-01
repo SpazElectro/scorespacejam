@@ -49,20 +49,16 @@ func _authentication_request():
 func _on_authentication_request_completed(result, response_code, headers, body):
 	var json = JSON.new()
 	json.parse(body.get_string_from_utf8())
-	print(body.get_string_from_utf8())
 	var file = FileAccess.open("user://LootLocker.data", FileAccess.WRITE)
 	file.store_string(json.get_data().player_identifier)
 	file.close()
 	
 	session_token = json.get_data().session_token
-	print(json.get_data())
-	
 	auth_http.queue_free()
 	_get_leaderboards()
 
 
 func _get_leaderboards():
-	print("Getting leaderboards")
 	var url = "https://api.lootlocker.io/game/leaderboards/"+leaderboard_key+"/list?count=10"
 	var headers = ["Content-Type: application/json", "x-session-token:"+session_token]
 	
@@ -72,16 +68,16 @@ func _get_leaderboards():
 	leaderboard_http.request(url, headers, HTTPClient.METHOD_GET, "")
 
 func _on_leaderboard_request_completed(result, response_code, headers, body):
+	if response_code == 403:
+		return
 	var json = JSON.new()
 	json.parse(body.get_string_from_utf8())
-	print(body.get_string_from_utf8())
 	var leaderboardFormatted = ""
 	for n in json.get_data().items.size():
 		leaderboardFormatted += str(json.get_data().items[n].rank)+str(". ")
 		leaderboardFormatted += str(json.get_data().items[n].player.id)+str(" - ")
 		leaderboardFormatted += str(json.get_data().items[n].score)+str("\n")
 	print(leaderboardFormatted)
-	leaderboard_http.queue_free()
 
 
 func _upload_score(score: int):
@@ -95,5 +91,3 @@ func _upload_score(score: int):
 func _on_upload_score_request_completed(result, response_code, headers, body) :
 	var json = JSON.new()
 	json.parse(body.get_string_from_utf8())
-	print(json.get_data())
-	submit_score_http.queue_free()

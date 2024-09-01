@@ -1,0 +1,17 @@
+[remap]
+
+importer="com.timothyqiu.gdfxr.importer"
+type="AudioStreamWAV"
+uid="uid://dk270vwmoxstj"
+path="res://.godot/imported/shotgun.sfxr-791921a8c9d325abba6f6cd38959c0f2.sample"
+
+[deps]
+
+source_file="res://resources/audio/shotgun.sfxr"
+dest_files=["res://.godot/imported/shotgun.sfxr-791921a8c9d325abba6f6cd38959c0f2.sample"]
+
+[params]
+
+loop=false
+bit_depth=0
+sample_rate=0

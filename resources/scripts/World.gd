@@ -7,11 +7,14 @@ var score = 0:
 	get:
 		return (-local_player.position.y+583) + (coins*100)
 
-static var instance
+static var instance: World
 
-@onready var local_player = $Player
+@onready var local_player: Player = $Player
 @onready var coin_template = $Coins/CoinTemplate
 @onready var coins_container = $Coins
+@onready var jump_pads_container = $JumpPads
+
+var jump_pad_scene: PackedScene = preload("res://resources/scenes/jump_pad.tscn")
 
 var spawn_point
 
@@ -27,7 +30,7 @@ func _ready():
 var times_generated = 0
 @onready var genpointtemplate = $GenerationPointTemplate
 func generate_content_below(asdf, p, player_y: float):
-	if asdf and asdf.is_in_group("coin"):
+	if asdf and (asdf.is_in_group("coin") or asdf.is_in_group("jump_pad")):
 		return
 	
 	var _player_y = player_y
@@ -81,6 +84,12 @@ func _process(delta):
 func set_cell(x, y, tx, ty):
 	$TileMapLayer.set_cell(Vector2i(x, y), 0, Vector2i(tx, ty))
 
+func get_cell(x: int, y: int) -> Variant:
+	var tile = $TileMapLayer.get_cell_atlas_coords(Vector2i(x, y))
+	if tile.x == -1 and tile.y == -1:
+		return -1
+	return tile
+
 func create_platform(x: int, y: int, width: int):
 	var clamped_x = clamp(x, 0, 15)
 	
@@ -92,6 +101,7 @@ func create_platform(x: int, y: int, width: int):
 	var pattern = [0, 2, 4]
 	var ylevel = pattern[times_generated % 3]
 	
+	var jump_pads = []
 	var coin: Area2D
 	
 	if width > 1:
@@ -118,6 +128,9 @@ func create_platform(x: int, y: int, width: int):
 					last_was_prop = true
 			else: last_was_prop = false
 			
+			if y <= 0 and (i == width-1 or i == 0) and randi_range(1, 20) >= 15:
+				jump_pads.append([current_x, y])
+			
 			set_cell(current_x, y, 2, ylevel)
 		
 		set_cell(clamped_x + width - 1, y, 3, ylevel)
@@ -129,6 +142,24 @@ func create_platform(x: int, y: int, width: int):
 		coins_container.add_child(coin)
 		spawn_point = coin.global_position
 		set_cell(clamped_x, y, 0, ylevel)
+	
+	var jump_pad_cooldown = 0
+	for t in jump_pads:
+		var cell = get_cell(t[0], t[1]-1)
+		if typeof(cell) != TYPE_INT:
+			continue
+		cell = get_cell(t[0], t[1]-2)
+		if typeof(cell) != TYPE_INT:
+			continue
+		if jump_pad_cooldown > 0:
+			jump_pad_cooldown -= 1
+			continue
+		
+		var pad = jump_pad_scene.instantiate()
+		pad.global_position = $TileMapLayer.to_global($TileMapLayer.map_to_local(Vector2i(t[0], t[1])))
+		pad.global_position.y -= 36
+		jump_pads_container.add_child(pad)
+		jump_pad_cooldown = 3
 	
 	return coin.global_position
 
@@ -151,7 +182,7 @@ func update_health():
 	
 	if local_player.health == 0:
 		$UI/DeadMenu.visible = true
-
+		$Lava.base_speed = 0
 
 func on_retry():
 	get_tree().reload_current_scene()

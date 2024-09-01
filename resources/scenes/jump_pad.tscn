@@ -1,0 +1,77 @@
+[gd_scene load_steps=9 format=3 uid="uid://cta3u5kgdtnn2"]
+
+[ext_resource type="Script" path="res://resources/scripts/JumpPad.gd" id="1_toyht"]
+[ext_resource type="Texture2D" uid="uid://bx6e0ohnt0shd" path="res://assets/tiles.png" id="2_h48sk"]
+[ext_resource type="AudioStream" uid="uid://cprhgteuxwl1q" path="res://resources/audio/jump_pad.sfxr" id="3_bauv2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_36qut"]
+atlas = ExtResource("2_h48sk")
+region = Rect2(126, 90, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qpado"]
+atlas = ExtResource("2_h48sk")
+region = Rect2(144, 90, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jl3tx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_36qut")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_36qut")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qpado")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qpado")
+}],
+"loop": false,
+"name": &"bounce",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qpado")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4i3qc"]
+size = Vector2(20, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rthqg"]
+size = Vector2(20, 14)
+
+[node name="JumpPad" type="StaticBody2D" groups=["jump_pad"]]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_toyht")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_jl3tx")
+animation = &"bounce"
+frame = 3
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 7)
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_4i3qc")
+one_way_collision = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+position = Vector2(0, 2)
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_rthqg")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_bauv2")

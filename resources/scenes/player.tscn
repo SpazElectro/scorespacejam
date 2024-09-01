@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://spagfytaaui1"]
+[gd_scene load_steps=8 format=3 uid="uid://spagfytaaui1"]
 
 [ext_resource type="Script" path="res://resources/scripts/Player.gd" id="1_5xwv4"]
 [ext_resource type="Texture2D" uid="uid://cwumaytyiaejb" path="res://assets/player/character_0000.png" id="1_ptwvv"]
 [ext_resource type="Texture2D" uid="uid://c6m3nuqssdkg4" path="res://assets/player/character_0001.png" id="2_d3tj7"]
 [ext_resource type="Texture2D" uid="uid://bbadfmvj7mw4f" path="res://assets/weapons/shotgun.png" id="4_a7b3o"]
+[ext_resource type="AudioStream" uid="uid://dk270vwmoxstj" path="res://resources/audio/shotgun.sfxr" id="5_ak3h7"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_c7c5c"]
 animations = [{
@@ -33,7 +34,7 @@ size = Vector2(20, 23)
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(2, 2)
 script = ExtResource("1_5xwv4")
-weapon_orbit_radius = 20.0
+max_jumps = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -55,3 +56,10 @@ shape = SubResource("RectangleShape2D_el4a0")
 modulate = Color(0.501961, 0.501961, 0.501961, 1)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("4_a7b3o")
+
+[node name="ShotgunSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_ak3h7")
+
+[node name="DashTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://n1k16j01esx1"]
+[gd_scene load_steps=11 format=3 uid="uid://n1k16j01esx1"]
 
 [ext_resource type="Texture2D" uid="uid://bx6e0ohnt0shd" path="res://assets/tiles.png" id="1_kkprr"]
 [ext_resource type="Script" path="res://resources/scripts/Coin.gd" id="1_oqjaq"]
+[ext_resource type="AudioStream" uid="uid://c3pmx84o6opy3" path="res://resources/audio/coin.sfxr" id="3_xcfww"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v64dk"]
 atlas = ExtResource("1_kkprr")
@@ -114,9 +115,12 @@ tracks/3/path = NodePath(".")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.5),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
+"args": [],
+"method": &"play_sound"
+}, {
 "args": [],
 "method": &"queue_free"
 }]
@@ -144,3 +148,6 @@ shape = SubResource("RectangleShape2D_33jg4")
 libraries = {
 "": SubResource("AnimationLibrary_nxlx8")
 }
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_xcfww")

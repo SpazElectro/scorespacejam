@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://b7abyjoywj2xi"]
+[gd_scene load_steps=21 format=4 uid="uid://b7abyjoywj2xi"]
 
 [ext_resource type="Texture2D" uid="uid://csm13uwlsfiur" path="res://assets/backgrounds/backgroundCastles.png" id="1_calnp"]
 [ext_resource type="Texture2D" uid="uid://bx6e0ohnt0shd" path="res://assets/tiles.png" id="1_ex228"]
@@ -6,8 +6,8 @@
 [ext_resource type="Script" path="res://resources/scripts/Leaderboards.gd" id="2_j84i6"]
 [ext_resource type="FontFile" uid="uid://dcy4tcp1un3hm" path="res://assets/VCR_OSD_MONO_1.001.ttf" id="2_xfbyn"]
 [ext_resource type="PackedScene" uid="uid://spagfytaaui1" path="res://resources/scenes/player.tscn" id="3_435f8"]
+[ext_resource type="Script" path="res://resources/scripts/Commands.gd" id="3_bvbu4"]
 [ext_resource type="PackedScene" uid="uid://n1k16j01esx1" path="res://resources/scenes/coin.tscn" id="5_p2qib"]
-[ext_resource type="Script" path="res://resources/scripts/JumpPad.gd" id="6_x0yf7"]
 [ext_resource type="Script" path="res://resources/scripts/Camera.gd" id="7_qr1nt"]
 [ext_resource type="Script" path="res://resources/scripts/Lava.gd" id="8_tkpfa"]
 [ext_resource type="Shader" path="res://resources/lava.gdshader" id="8_vsu2s"]
@@ -34,6 +34,13 @@ shadow_color = Color(0, 0, 0, 1)
 font = ExtResource("2_xfbyn")
 font_size = 48
 font_color = Color(1, 0, 0, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_685a3"]
+font = ExtResource("2_xfbyn")
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 5
@@ -299,47 +306,8 @@ texture_region_size = Vector2i(18, 18)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_1vu8b")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_36qut"]
-atlas = ExtResource("1_ex228")
-region = Rect2(126, 90, 18, 18)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qpado"]
-atlas = ExtResource("1_ex228")
-region = Rect2(144, 90, 18, 18)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_jl3tx"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_36qut")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_36qut")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qpado")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qpado")
-}],
-"loop": false,
-"name": &"bounce",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qpado")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4i3qc"]
-size = Vector2(20, 9)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rthqg"]
-size = Vector2(20, 14)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sama4"]
+size = Vector2(516, 36)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3bhe7"]
 shader = ExtResource("8_vsu2s")
@@ -347,14 +315,14 @@ shader_parameter/color1 = Color(2, 1.5, 0, 1)
 shader_parameter/color2 = Color(0.5, 0, 0, 1)
 shader_parameter/wave_speed = 10.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sama4"]
-size = Vector2(516, 36)
-
-[node name="Node2D" type="Node2D"]
+[node name="World" type="Node2D"]
 script = ExtResource("1_ta3c1")
 
 [node name="Leaderboards" type="Node" parent="."]
 script = ExtResource("2_j84i6")
+
+[node name="Commands" type="Node" parent="."]
+script = ExtResource("3_bvbu4")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -381,6 +349,7 @@ position = Vector2(256, 320)
 texture = ExtResource("1_calnp")
 
 [node name="Health" type="Node2D" parent="UI"]
+visible = false
 position = Vector2(18, 18)
 scale = Vector2(2, 2)
 
@@ -414,12 +383,20 @@ offset_bottom = 644.0
 color = Color(1, 0, 0, 0.5)
 
 [node name="Label" type="Label" parent="UI/DeadMenu"]
-offset_left = 117.0
 offset_top = 138.0
-offset_right = 370.0
+offset_right = 512.0
 offset_bottom = 181.0
 text = "You Died!"
 label_settings = SubResource("LabelSettings_eqyxv")
+horizontal_alignment = 1
+
+[node name="SplashLabel" type="Label" parent="UI/DeadMenu"]
+offset_top = 181.0
+offset_right = 512.0
+offset_bottom = 224.0
+text = ":3"
+label_settings = SubResource("LabelSettings_685a3")
+horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="UI/DeadMenu"]
 offset_top = 287.0
@@ -447,33 +424,6 @@ position = Vector2(401, 123)
 
 [node name="JumpPads" type="Node" parent="."]
 
-[node name="CharacterBody2D" type="StaticBody2D" parent="JumpPads"]
-position = Vector2(263, 482)
-scale = Vector2(1.5, 1.5)
-script = ExtResource("6_x0yf7")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="JumpPads/CharacterBody2D"]
-texture_filter = 1
-scale = Vector2(2, 2)
-sprite_frames = SubResource("SpriteFrames_jl3tx")
-animation = &"bounce"
-frame = 3
-frame_progress = 1.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpPads/CharacterBody2D"]
-visible = false
-position = Vector2(0, 7)
-scale = Vector2(2, 2)
-shape = SubResource("RectangleShape2D_4i3qc")
-
-[node name="Area2D" type="Area2D" parent="JumpPads/CharacterBody2D"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpPads/CharacterBody2D/Area2D"]
-visible = false
-position = Vector2(0, 2)
-scale = Vector2(2, 2)
-shape = SubResource("RectangleShape2D_rthqg")
-
 [node name="Player" parent="." instance=ExtResource("3_435f8")]
 position = Vector2(247, 311)
 
@@ -486,10 +436,26 @@ addt = -0.1
 base_frequency = 0.1
 speed_divider = 50.0
 
+[node name="GenerationPointTemplate" type="Area2D" parent="."]
+visible = false
+position = Vector2(0, 604)
+
+[node name="ColorRect" type="ColorRect" parent="GenerationPointTemplate"]
+visible = false
+offset_right = 516.0
+offset_bottom = 36.0
+color = Color(0, 0.788235, 1, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GenerationPointTemplate"]
+visible = false
+position = Vector2(256, 18)
+shape = SubResource("RectangleShape2D_sama4")
+
 [node name="Lava" type="Area2D" parent="."]
+z_index = 2
 position = Vector2(0, 642)
 script = ExtResource("8_tkpfa")
-speed = 50.0
 
 [node name="ColorRect" type="ColorRect" parent="Lava"]
 material = SubResource("ShaderMaterial_3bhe7")
@@ -504,22 +470,6 @@ color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Lava"]
-visible = false
-position = Vector2(256, 18)
-shape = SubResource("RectangleShape2D_sama4")
-
-[node name="GenerationPointTemplate" type="Area2D" parent="."]
-visible = false
-position = Vector2(0, 604)
-
-[node name="ColorRect" type="ColorRect" parent="GenerationPointTemplate"]
-visible = false
-offset_right = 516.0
-offset_bottom = 36.0
-color = Color(0, 0.788235, 1, 1)
-metadata/_edit_use_anchors_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GenerationPointTemplate"]
 visible = false
 position = Vector2(256, 18)
 shape = SubResource("RectangleShape2D_sama4")
