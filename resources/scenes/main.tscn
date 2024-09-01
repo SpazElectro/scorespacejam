@@ -1,21 +1,30 @@
-[gd_scene load_steps=21 format=4 uid="uid://b7abyjoywj2xi"]
+[gd_scene load_steps=26 format=4 uid="uid://b7abyjoywj2xi"]
 
-[ext_resource type="Texture2D" uid="uid://csm13uwlsfiur" path="res://assets/backgrounds/backgroundCastles.png" id="1_calnp"]
 [ext_resource type="Texture2D" uid="uid://bx6e0ohnt0shd" path="res://assets/tiles.png" id="1_ex228"]
 [ext_resource type="Script" path="res://resources/scripts/World.gd" id="1_ta3c1"]
-[ext_resource type="Script" path="res://resources/scripts/Leaderboards.gd" id="2_j84i6"]
 [ext_resource type="FontFile" uid="uid://dcy4tcp1un3hm" path="res://assets/VCR_OSD_MONO_1.001.ttf" id="2_xfbyn"]
 [ext_resource type="PackedScene" uid="uid://spagfytaaui1" path="res://resources/scenes/player.tscn" id="3_435f8"]
-[ext_resource type="Script" path="res://resources/scripts/Commands.gd" id="3_bvbu4"]
 [ext_resource type="PackedScene" uid="uid://n1k16j01esx1" path="res://resources/scenes/coin.tscn" id="5_p2qib"]
+[ext_resource type="Texture2D" uid="uid://dnfr0mndbxyp1" path="res://assets/backgrounds/backgroundColorFall.png" id="7_lpjx1"]
+[ext_resource type="Theme" uid="uid://bur45gcdny8mk" path="res://resources/default.tres" id="7_pafxl"]
 [ext_resource type="Script" path="res://resources/scripts/Camera.gd" id="7_qr1nt"]
+[ext_resource type="Texture2D" uid="uid://bvi5yf7ld2xp7" path="res://assets/backgrounds/backgroundColorForest.png" id="8_o23l3"]
 [ext_resource type="Script" path="res://resources/scripts/Lava.gd" id="8_tkpfa"]
 [ext_resource type="Shader" path="res://resources/lava.gdshader" id="8_vsu2s"]
+[ext_resource type="Texture2D" uid="uid://b4lchj0lge652" path="res://assets/backgrounds/backgroundForest.png" id="10_x3c8t"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_f1h6l"]
 font = ExtResource("2_xfbyn")
 font_size = 32
 font_color = Color(1, 0.498039, 0, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8u2kt"]
+font = ExtResource("2_xfbyn")
+font_size = 32
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 5
@@ -47,6 +56,14 @@ shadow_size = 5
 shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ma02g"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ax2yi"]
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_fxred"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_q5ye0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1vu8b"]
 texture = ExtResource("1_ex228")
@@ -318,12 +335,6 @@ shader_parameter/wave_speed = 10.0
 [node name="World" type="Node2D"]
 script = ExtResource("1_ta3c1")
 
-[node name="Leaderboards" type="Node" parent="."]
-script = ExtResource("2_j84i6")
-
-[node name="Commands" type="Node" parent="."]
-script = ExtResource("3_bvbu4")
-
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Score" type="Label" parent="UI"]
@@ -332,6 +343,16 @@ offset_bottom = 29.0
 text = "1234567890"
 label_settings = SubResource("LabelSettings_f1h6l")
 horizontal_alignment = 2
+
+[node name="Subtitle" type="Label" parent="UI"]
+offset_top = 30.0
+offset_right = 512.0
+offset_bottom = 74.0
+text = "Spaaaace!!!!!!!"
+label_settings = SubResource("LabelSettings_8u2kt")
+horizontal_alignment = 1
+visible_characters = 0
+visible_ratio = 0.0
 
 [node name="Speed" type="Label" parent="UI"]
 visible = false
@@ -344,9 +365,19 @@ label_settings = SubResource("LabelSettings_fwlaf")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="UI"]
 
-[node name="Background" type="Sprite2D" parent="UI/ParallaxBackground"]
+[node name="BackgroundColorFall" type="Sprite2D" parent="UI/ParallaxBackground"]
+visible = false
 position = Vector2(256, 320)
-texture = ExtResource("1_calnp")
+texture = ExtResource("7_lpjx1")
+
+[node name="BackgroundColorForest" type="Sprite2D" parent="UI/ParallaxBackground"]
+position = Vector2(256, 320)
+texture = ExtResource("8_o23l3")
+
+[node name="BackgroundForest" type="Sprite2D" parent="UI/ParallaxBackground"]
+visible = false
+position = Vector2(256, 320)
+texture = ExtResource("10_x3c8t")
 
 [node name="Health" type="Node2D" parent="UI"]
 visible = false
@@ -409,6 +440,56 @@ theme_override_fonts/font = ExtResource("2_xfbyn")
 theme_override_font_sizes/font_size = 36
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ma02g")
 text = "Retry"
+
+[node name="FadeLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="FadeLayer"]
+offset_right = 512.0
+offset_bottom = 640.0
+color = Color(0, 0, 0, 0)
+
+[node name="ThankYou" type="Label" parent="FadeLayer"]
+modulate = Color(1, 1, 1, 0)
+offset_top = 22.0
+offset_right = 512.0
+offset_bottom = 640.0
+text = "Thank you for playing"
+label_settings = SubResource("LabelSettings_ax2yi")
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="FadeLayer/ThankYou"]
+layout_mode = 0
+offset_top = 81.0
+offset_right = 512.0
+offset_bottom = 618.0
+text = "This was made in 2 days for the ScoreSpace GameJam.
+
+Special thanks to:
+- Kenney from kenney.nl, without him this wouldn't exist.
+- The amazing people at Godot
+and you, for playing :)"
+label_settings = SubResource("LabelSettings_fxred")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Label2" type="Label" parent="FadeLayer/ThankYou"]
+layout_mode = 0
+offset_top = 595.0
+offset_right = 512.0
+offset_bottom = 618.0
+text = "sorry for the lame ending"
+label_settings = SubResource("LabelSettings_q5ye0")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Play" type="Button" parent="FadeLayer/ThankYou"]
+layout_mode = 0
+offset_top = 515.0
+offset_right = 512.0
+offset_bottom = 565.0
+theme = ExtResource("7_pafxl")
+disabled = true
+text = "Main Menu"
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 texture_filter = 1
@@ -476,5 +557,6 @@ position = Vector2(256, 18)
 shape = SubResource("RectangleShape2D_sama4")
 
 [connection signal="pressed" from="UI/DeadMenu/Button" to="." method="on_retry"]
+[connection signal="pressed" from="FadeLayer/ThankYou/Play" to="." method="_on_play_pressed"]
 [connection signal="area_entered" from="Coins/CoinTemplate" to="Player" method="on_collect_coin"]
 [connection signal="area_entered" from="Lava" to="Lava" method="_on_area_entered"]

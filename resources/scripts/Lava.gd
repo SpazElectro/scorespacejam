@@ -4,24 +4,40 @@ class_name Lava
 @export var base_speed = 50.0
 @export var speed_multiplier = 1.0
 @export var slow_down_distance = 800.0
+@export var offset_above_player = 100.0  # New exported variable to set how much above the player the lava should move
+static var is_in_space = false
+var has_hit = false
+var gradual_space_increase = 0
 
 func _ready():
+	is_in_space = false
 	show()
 
 func _process(delta):
 	var player_y = World.instance.local_player.position.y
 	var lava_y = position.y
 	
-	var distance_to_player = abs(player_y - lava_y)
+	if is_in_space:
+		if abs(lava_y-player_y) >= 900 and abs(gradual_space_increase) >= 100:
+			World.instance.fade_to_thank_you()
+		position.y = player_y+100-gradual_space_increase
+		gradual_space_increase += -(delta*40) if has_hit else delta*10
+		return
+	if lava_y < player_y + offset_above_player:
+		position.y = player_y + offset_above_player
+		return
 	
+	var distance_to_player = abs(player_y - lava_y)
 	var adjusted_multiplier = speed_multiplier
 	if distance_to_player < slow_down_distance:
 		adjusted_multiplier *= distance_to_player / slow_down_distance
 	
 	var adjusted_speed = base_speed * (1 + (adjusted_multiplier * (1.0 - player_y / get_viewport_rect().size.y)))
-	
 	position.y -= adjusted_speed * delta
 
 func _on_area_entered(area):
 	if area.get_parent() is Player:
-		area.get_parent().kill()
+		if not is_in_space:
+			area.get_parent().kill()
+		else:
+			has_hit = true

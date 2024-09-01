@@ -14,7 +14,7 @@ class_name Player
 @export var max_jumps = 2
 @export var max_dashes = 3
 @export var max_health = 3
-@export var max_speed = 3000
+@export var max_speed = 2000
 
 var _shoot_timer = 0
 var jump_pad_jumps = 0
@@ -139,8 +139,9 @@ func kill():
 	velocity.x = 0
 	velocity.y = 0
 	
-	Leaderboards.instance._upload_score(World.instance.score)
-	Leaderboards.instance._get_leaderboards()
+	if Shared.get_gamemode() == Shared.GAMEMODE.ENDLESS:
+		Leaderboards._upload_score(World.instance.score)
+		Leaderboards._get_leaderboards()
 
 func _on_dash_timer_timeout():
 	dashes = min(dashes+1, max_dashes)

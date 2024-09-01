@@ -1,9 +1,6 @@
 # why would you cheat in a game this bad quality
 
 extends Node
-class_name Leaderboards
-
-static var instance
 
 var game_API_key = "dev_abda0ec58a954d5c980b26c5edc08f9c"
 var development_mode = true
@@ -15,7 +12,6 @@ var leaderboard_http = HTTPRequest.new()
 var submit_score_http = HTTPRequest.new()
 
 func _ready():
-	instance = self
 	_authentication_request()
 
 func _authentication_request():

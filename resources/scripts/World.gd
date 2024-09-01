@@ -13,7 +13,9 @@ var splashes = [
 	"for scorespace #31!",
 	"leaderboards powered by lootlocker!",
 	"powered by godot!",
-	"the floor is lava!"
+	"the floor is lava!",
+	"have you tried jumping",
+	"have you tried rocket jumping",
 ]
 
 var coins = 0
@@ -28,6 +30,7 @@ static var instance: World
 @onready var coin_template = $Coins/CoinTemplate
 @onready var coins_container = $Coins
 @onready var jump_pads_container = $JumpPads
+@export var chunk_size = 300
 
 var jump_pad_scene: PackedScene = preload("res://resources/scenes/jump_pad.tscn")
 
@@ -42,18 +45,77 @@ func _ready():
 	if spawn_point:
 		local_player.position = spawn_point
 
+var thank_you = false
+func fade_to_thank_you():
+	if thank_you:
+		return
+	thank_you = true
+	var tween = get_tree().create_tween()
+	tween.tween_property($UI/Subtitle, "visible_ratio", 1, 3.0)
+	tween.tween_property(get_parent().get_node("MusicPlayer"), "volume_db", -50.0, 3.0)
+	tween.play()
+	await tween.finished
+	tween = get_tree().create_tween()
+	tween.tween_property($FadeLayer/ColorRect, "color", Color(0, 0, 0, 1), 4.0)
+	tween.play()
+	await tween.finished
+	tween = get_tree().create_tween()
+	tween.tween_property($FadeLayer/ThankYou, "modulate", Color(1, 1, 1, 1), 2.0)
+	tween.play()
+	$FadeLayer/ThankYou/Play.disabled = false
+	await tween.finished
+	print("Thank you for playing.")
+
 var times_generated = 0
 @onready var genpointtemplate = $GenerationPointTemplate
 func generate_content_below(asdf, p, player_y: float):
-	if asdf and (asdf.is_in_group("coin") or asdf.is_in_group("jump_pad")):
+	if asdf and (not asdf.get_parent() is Player):
 		return
+	
+	if Shared.get_gamemode() == Shared.GAMEMODE.NORMAL:
+		if times_generated == 3:
+			times_generated += 1
+			create_walls(-10_000, 0)
+			Lava.is_in_space = true
+			local_player.gravity = 1
+			$Camera.position_smoothing_speed = 15
+			return
+		elif times_generated > 3:
+			return
+	
+	# change background
+	var old
+	var new
+	for x in $UI/ParallaxBackground.get_children():
+		if x.visible:
+			old = x
+			break
+	var ylevel = times_generated % 3
+	if ylevel == 0:
+		new = $UI/ParallaxBackground/BackgroundColorForest
+	elif ylevel == 1:
+		new = $UI/ParallaxBackground/BackgroundColorFall
+	else:
+		new = $UI/ParallaxBackground/BackgroundForest
+	
+	if old != new:
+		var duration = 1.5
+		old.modulate = Color(1, 1, 1, 1)
+		new.modulate = Color(0, 0, 0, 0)
+		new.show()
+		var tween = get_tree().create_tween()
+		tween.set_parallel()
+		tween.tween_property(new, "modulate", Color(1, 1, 1, 1), duration)
+		tween.tween_property(old, "modulate", Color(0, 0, 0, 0), duration)
+		tween.play()
+		get_tree().create_timer(duration).timeout.connect(old.hide)
 	
 	var _player_y = player_y
 	player_y *= -120
 	var previous_x = 0
 	var pl
 	
-	for y in range(int(player_y) - 100, int(player_y) + 15, 3):
+	for y in range(int(player_y) - chunk_size, int(player_y) + 15, 3):
 		var new_x = randi_range(0, 16)
 		while previous_x == new_x:
 			new_x = randi_range(0, 16)
@@ -68,9 +130,8 @@ func generate_content_below(asdf, p, player_y: float):
 	if p:
 		p.queue_free()
 	
-	create_walls(int(player_y-200), int(abs(player_y)+200))
+	create_walls(int(player_y-chunk_size), int(abs(player_y)+chunk_size))
 	
-	print("Generated at ", player_y)
 	var point = genpointtemplate.duplicate()
 	point.global_position = pl
 	point.position.x = 0
@@ -203,3 +264,9 @@ func update_health():
 
 func on_retry():
 	get_tree().reload_current_scene()
+
+
+var main_menu: PackedScene = preload("res://resources/scenes/mainmenu.tscn")
+
+func _on_play_pressed():
+	get_tree().change_scene_to_packed(main_menu)
