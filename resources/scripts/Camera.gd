@@ -1,22 +1,31 @@
 extends Camera2D
+class_name Camera
 
-@export var addt = 0.0
-@export var base_frequency = 1.0
-@export var max_frequency = 5.0
-@export var lerp_speed = 2.0
-@export var speed_divider = 1.0
+@export var shake_intensity = 10.0
+@export var shake_frequency = 5.0
+@export var shake_duration = 0.5
 
-var frames = 0.0
-var current_frequency = base_frequency
+var shake_timer = 0.0
+var shake_offset = Vector2()
+
+static var instance: Camera
+
+func _ready():
+	instance = self
 
 func _process(delta):
-	var player_speed = World.instance.local_player.current_speed/speed_divider
-	var target_frequency = base_frequency + (player_speed / World.instance.local_player.speed) * (max_frequency - base_frequency)
-	
-	current_frequency = lerp(current_frequency, target_frequency, lerp_speed * delta)
-	frames += delta * current_frequency
-	
-	var s = 1.0 + abs(sin(frames * PI * 2)) * 0.1 + addt
-	
-	zoom = Vector2(s, s)
+	position.x = 256
 	position.y = World.instance.local_player.position.y
+	
+	if shake_timer > 0:
+		shake_timer -= delta
+		shake_offset = Vector2(randf_range(-shake_intensity, shake_intensity), randf_range(-shake_intensity, shake_intensity))
+		position += shake_offset
+		shake_timer = max(shake_timer, 0)
+	else:
+		shake_offset = Vector2() # Reset shake_offset when shake ends
+
+static func shake_camera(intensity: float, duration: float):
+	instance.shake_intensity = intensity
+	instance.shake_duration = duration
+	instance.shake_timer = duration

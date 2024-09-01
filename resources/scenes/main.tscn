@@ -512,12 +512,10 @@ position = Vector2(247, 311)
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(256, 320)
+zoom = Vector2(0.95, 0.95)
 position_smoothing_enabled = true
 drag_vertical_enabled = true
 script = ExtResource("7_qr1nt")
-addt = -0.1
-base_frequency = 0.1
-speed_divider = 50.0
 
 [node name="GenerationPointTemplate" type="Area2D" parent="."]
 visible = false

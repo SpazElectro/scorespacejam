@@ -32,9 +32,7 @@ static var instance: World
 @onready var jump_pads_container = $JumpPads
 
 var chunk_size = 300
-
 var jump_pad_scene: PackedScene = preload("res://resources/scenes/jump_pad.tscn")
-
 var spawn_point
 
 func _ready():
@@ -42,7 +40,6 @@ func _ready():
 	
 	generate_content_below(null, null, 0)
 	
-	#create_platform(15, 18, 3)
 	if spawn_point:
 		local_player.position = spawn_point
 	if Shared.get_gamemode() == Shared.GAMEMODE.NORMAL:
@@ -56,7 +53,8 @@ func fade_to_thank_you():
 	$FadeLayer.visible = true
 	var tween = get_tree().create_tween()
 	tween.tween_property($UI/Subtitle, "visible_ratio", 1, 3.0)
-	tween.tween_property(get_parent().get_node("MusicPlayer"), "volume_db", -50.0, 3.0)
+	if Shared.get_real_mus_vol() > 0:
+		tween.tween_property(get_parent().get_node("MusicPlayer"), "volume_db", -50.0, 3.0)
 	tween.play()
 	await tween.finished
 	tween = get_tree().create_tween()

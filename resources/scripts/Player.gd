@@ -4,7 +4,7 @@ class_name Player
 @export var weapon_orbit_radius: float = 20.0
 @export var speed = 500
 @export_category("Shotgun")
-@export_range(1.0, 5.0) var shoot_timer: float = 1
+@export_range(1.0, 5.0) var shoot_timer: float = 2.4
 @export var recoil: float = 80
 @export_category("Forces")
 @export var jump_force = 20000
@@ -101,6 +101,13 @@ func _process(delta):
 			$ShotgunSound.pitch_scale = randf_range(0.7, 1.0)
 			$ShotgunSound.play()
 			_shoot_timer = shoot_timer
+			
+			Camera.shake_camera(recoil, 0.1)
+			
+			$Weapon/Muzzle.visible = true
+			await get_tree().process_frame
+			await get_tree().process_frame
+			$Weapon/Muzzle.visible = false
 		if _shoot_timer > 0:
 			_shoot_timer -= delta
 		
