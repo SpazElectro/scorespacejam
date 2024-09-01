@@ -104,6 +104,11 @@ func generate_content_below(asdf, p, player_y: float):
 			return
 		elif times_generated > 3:
 			return
+	else:
+		for i in range(10):
+			$UI/Destination.visible = true
+			await get_tree().create_timer(0.1).timeout
+			$UI/Destination.visible = false
 	
 	# change background
 	var old

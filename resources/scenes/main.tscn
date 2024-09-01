@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://b7abyjoywj2xi"]
+[gd_scene load_steps=30 format=4 uid="uid://b7abyjoywj2xi"]
 
 [ext_resource type="Texture2D" uid="uid://bx6e0ohnt0shd" path="res://assets/tiles.png" id="1_ex228"]
 [ext_resource type="Script" path="res://resources/scripts/World.gd" id="1_ta3c1"]
@@ -10,9 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://dnfr0mndbxyp1" path="res://assets/backgrounds/backgroundColorFall.png" id="7_lpjx1"]
 [ext_resource type="Theme" uid="uid://bur45gcdny8mk" path="res://resources/default.tres" id="7_pafxl"]
 [ext_resource type="Script" path="res://resources/scripts/Camera.gd" id="7_qr1nt"]
+[ext_resource type="PackedScene" uid="uid://doy1v1jerro7i" path="res://resources/scenes/leaderboard.tscn" id="8_01j2r"]
 [ext_resource type="Texture2D" uid="uid://bvi5yf7ld2xp7" path="res://assets/backgrounds/backgroundColorForest.png" id="8_o23l3"]
 [ext_resource type="Script" path="res://resources/scripts/Lava.gd" id="8_tkpfa"]
 [ext_resource type="Shader" path="res://resources/lava.gdshader" id="8_vsu2s"]
+[ext_resource type="Texture2D" uid="uid://bi8icbn358v4p" path="res://assets/destination.png" id="10_lxm8u"]
 [ext_resource type="Texture2D" uid="uid://b4lchj0lge652" path="res://assets/backgrounds/backgroundForest.png" id="10_x3c8t"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_f1h6l"]
@@ -435,14 +437,25 @@ vertical_alignment = 1
 
 [node name="Button" type="Button" parent="UI/DeadMenu"]
 offset_top = 287.0
-offset_right = 512.0
-offset_bottom = 324.0
+offset_right = 441.0
+offset_bottom = 327.0
 theme_type_variation = &"FlatButton"
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("2_xfbyn")
 theme_override_font_sizes/font_size = 36
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ma02g")
 text = "Retry"
+
+[node name="Leaderboard" parent="UI/DeadMenu" instance=ExtResource("8_01j2r")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 310.0
+offset_top = 250.0
+offset_right = 310.0
+offset_bottom = 250.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="PauseMenu" type="Node2D" parent="UI"]
 visible = false
@@ -453,6 +466,12 @@ offset_bottom = 640.0
 color = Color(0, 0, 0, 0.5)
 
 [node name="Options" parent="UI/PauseMenu" instance=ExtResource("7_dmf4e")]
+
+[node name="Destination" type="Sprite2D" parent="UI"]
+visible = false
+position = Vector2(247, 50)
+scale = Vector2(1.40625, 1.40625)
+texture = ExtResource("10_lxm8u")
 
 [node name="FadeLayer" type="CanvasLayer" parent="."]
 visible = false

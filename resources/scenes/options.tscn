@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ducq0jguonwky"]
+[gd_scene load_steps=6 format=3 uid="uid://ducq0jguonwky"]
 
 [ext_resource type="Script" path="res://resources/scripts/Options.gd" id="1_0nnhk"]
 [ext_resource type="Theme" uid="uid://bur45gcdny8mk" path="res://resources/default.tres" id="1_5nqp0"]
 [ext_resource type="FontFile" uid="uid://dcy4tcp1un3hm" path="res://assets/VCR_OSD_MONO_1.001.ttf" id="2_82rha"]
+[ext_resource type="PackedScene" uid="uid://doy1v1jerro7i" path="res://resources/scenes/leaderboard.tscn" id="4_rvp2b"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_bgir4"]
 font = ExtResource("2_82rha")
@@ -17,6 +18,7 @@ anchors_preset = 0
 script = ExtResource("1_0nnhk")
 
 [node name="Back" type="Button" parent="."]
+layout_mode = 0
 offset_right = 512.0
 offset_bottom = 50.0
 theme = ExtResource("1_5nqp0")
@@ -24,6 +26,7 @@ text = "Back"
 
 [node name="MainMenu" type="Button" parent="."]
 visible = false
+layout_mode = 0
 offset_top = 590.0
 offset_right = 512.0
 offset_bottom = 640.0
@@ -31,6 +34,7 @@ theme = ExtResource("1_5nqp0")
 text = "Main Menu"
 
 [node name="Audio" type="HSlider" parent="."]
+layout_mode = 0
 offset_left = 4.0
 offset_top = 80.0
 offset_right = 234.0
@@ -47,6 +51,7 @@ text = "Audio"
 label_settings = SubResource("LabelSettings_bgir4")
 
 [node name="Music" type="HSlider" parent="."]
+layout_mode = 0
 offset_left = 256.0
 offset_top = 80.0
 offset_right = 499.0
@@ -70,3 +75,10 @@ offset_top = 554.0
 offset_right = 506.0
 offset_bottom = 585.0
 text = "Cheats"
+
+[node name="Leaderboard" parent="." instance=ExtResource("4_rvp2b")]
+layout_mode = 1
+offset_left = 4.0
+offset_top = 226.0
+offset_right = 4.0
+offset_bottom = 226.0

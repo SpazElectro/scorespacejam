@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://doy1v1jerro7i"]
+[gd_scene load_steps=4 format=3 uid="uid://doy1v1jerro7i"]
 
 [ext_resource type="FontFile" uid="uid://dcy4tcp1un3hm" path="res://assets/VCR_OSD_MONO_1.001.ttf" id="1_bli5l"]
-[ext_resource type="Script" path="res://resources/scripts/leaderboardgui.gd" id="1_g6ebi"]
+[ext_resource type="Script" path="res://resources/scripts/LeaderboardUI.gd" id="1_g6ebi"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3i3si"]
+font = ExtResource("1_bli5l")
+font_size = 32
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Leaderboard" type="Control"]
 layout_mode = 3
@@ -12,10 +18,19 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_g6ebi")
 
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 206.0
+offset_bottom = 29.0
+text = "Leaderboard"
+label_settings = SubResource("LabelSettings_3i3si")
+
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
-offset_right = 156.0
-offset_bottom = 328.0
+offset_top = 30.0
+offset_right = 206.0
+offset_bottom = 358.0
+vertical_scroll_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
@@ -28,3 +43,10 @@ theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("1_bli5l")
 theme_override_font_sizes/font_size = 32
 text = "150,000"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_top = 29.0
+offset_right = 206.0
+offset_bottom = 33.0
+color = Color(0.505882, 0.505882, 0.505882, 1)

@@ -7,6 +7,8 @@ var development_mode = true
 var leaderboard_key = "score"
 var session_token = ""
 
+var authenticated = false
+
 var auth_http = HTTPRequest.new()
 var leaderboard_http = HTTPRequest.new()
 var submit_score_http = HTTPRequest.new()
@@ -38,46 +40,50 @@ func _authentication_request():
 	
 	auth_http = HTTPRequest.new()
 	add_child(auth_http)
-	auth_http.request_completed.connect(_on_authentication_request_completed)
 	auth_http.request("https://api.lootlocker.io/game/v2/session/guest", headers, HTTPClient.METHOD_POST, JSON.stringify(data))
-	
-
-func _on_authentication_request_completed(_result, _response_code, _headers, body):
+	var response = await auth_http.request_completed
 	var json = JSON.new()
-	json.parse(body.get_string_from_utf8())
-	var file = FileAccess.open("user://LootLocker.data", FileAccess.WRITE)
-	file.store_string(json.get_data().player_identifier)
-	file.close()
+	json.parse(response[3].get_string_from_utf8())
+	var file2 = FileAccess.open("user://LootLocker.data", FileAccess.WRITE)
+	file2.store_string(json.get_data().player_identifier)
+	file2.close()
 	
 	session_token = json.get_data().session_token
 	auth_http.queue_free()
-	_get_leaderboards()
+	authenticated = true
 
-
-func _get_leaderboards():
+func _get_leaderboards(tries=0):
+	if not authenticated:
+		await get_tree().process_frame
+		await get_tree().process_frame
+	if tries == 3:
+		return null
+	
 	var url = "https://api.lootlocker.io/game/leaderboards/" + leaderboard_key + "/list?count=10"
 	var headers = ["Content-Type: application/json", "x-session-token:" + session_token]
 	
 	var leaderboard_http = HTTPRequest.new()
 	add_child(leaderboard_http)
 	
-	var result = await leaderboard_http.request(url, headers, HTTPClient.METHOD_GET, "")
+	var result = leaderboard_http.request(url, headers, HTTPClient.METHOD_GET, "")
 	if result != OK:
 		print("Failed to make request.")
 		return ""
 	
-	await leaderboard_http.request_completed
-	var response_code = leaderboard_http.get_response_code()
-	var body = leaderboard_http.get_body_as_string()
+	var response = await leaderboard_http.request_completed
+	
+	var response_code = response[1]
+	var body = response[3]
 	
 	if response_code == 403:
 		print("Forbidden request.")
-		return ""
+		return await _get_leaderboards(tries+1)
+	
 	var json = JSON.new()
-	var parse_result = json.parse(body)
+	var parse_result = json.parse(body.get_string_from_utf8())
 	if parse_result != OK:
 		print("Failed to parse JSON.")
-		return ""
+		return await _get_leaderboards(tries+1)
 	
 	return json.get_data()
 
