@@ -1,6 +1,11 @@
 extends Control
 class_name MainMenu
 
+# note:
+# add dash feedback
+# add dash sound
+# add shotgun raycast to kill snowman
+
 var main_scene: PackedScene = preload("res://resources/scenes/main.tscn")
 
 var music_player: AudioStreamPlayer

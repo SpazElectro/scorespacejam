@@ -91,6 +91,8 @@ func _process(delta):
 		$Weapon.look_at(mouse_pos)
 		
 		if Input.is_action_just_pressed("shoot") and _shoot_timer <= 0:
+			# check here if the raycast
+			# hit a Snowman
 			apply_knockback(angle, recoil*1000)
 			$ShotgunSound.pitch_scale = randf_range(0.7, 1.0)
 			$ShotgunSound.play()

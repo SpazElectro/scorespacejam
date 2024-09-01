@@ -58,12 +58,19 @@ modulate = Color(0.501961, 0.501961, 0.501961, 1)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("4_a7b3o")
 
+[node name="RayCast2D" type="RayCast2D" parent="Weapon"]
+position = Vector2(97.5, -17.5)
+scale = Vector2(1, 1)
+target_position = Vector2(500, 0)
+collide_with_areas = true
+
 [node name="Muzzle" type="Sprite2D" parent="Weapon"]
 visible = false
 modulate = Color(2, 2, 2, 1)
 z_index = -1
 position = Vector2(96, -6)
 rotation = 1.5708
+scale = Vector2(2, 2)
 texture = ExtResource("5_15512")
 
 [node name="ShotgunSound" type="AudioStreamPlayer2D" parent="."]

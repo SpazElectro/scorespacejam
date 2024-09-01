@@ -1,4 +1,5 @@
 extends Area2D
+class_name Snowman
 
 var tile_cords: Vector2i
 
