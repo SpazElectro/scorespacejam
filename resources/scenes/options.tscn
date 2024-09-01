@@ -11,21 +11,26 @@ outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
 [node name="Options" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 0
-offset_left = -512.0
-offset_right = -512.0
 script = ExtResource("1_0nnhk")
 
 [node name="Back" type="Button" parent="."]
-layout_mode = 0
 offset_right = 512.0
 offset_bottom = 50.0
 theme = ExtResource("1_5nqp0")
 text = "Back"
 
+[node name="MainMenu" type="Button" parent="."]
+visible = false
+offset_top = 590.0
+offset_right = 512.0
+offset_bottom = 640.0
+theme = ExtResource("1_5nqp0")
+text = "Main Menu"
+
 [node name="Audio" type="HSlider" parent="."]
-layout_mode = 0
 offset_left = 4.0
 offset_top = 80.0
 offset_right = 234.0
@@ -42,7 +47,6 @@ text = "Audio"
 label_settings = SubResource("LabelSettings_bgir4")
 
 [node name="Music" type="HSlider" parent="."]
-layout_mode = 0
 offset_left = 256.0
 offset_top = 80.0
 offset_right = 499.0
@@ -57,3 +61,12 @@ offset_right = 256.0
 offset_bottom = 8.0
 text = "Music"
 label_settings = SubResource("LabelSettings_bgir4")
+
+[node name="Cheats" type="CheckButton" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 394.0
+offset_top = 554.0
+offset_right = 506.0
+offset_bottom = 585.0
+text = "Cheats"

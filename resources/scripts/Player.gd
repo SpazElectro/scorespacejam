@@ -29,19 +29,13 @@ var health = max_health:
 
 func _ready():
 	$ShotgunSound.volume_db = Shared.get_aud_vol()
-	if Shared.freaky_mode:
-		speed = 800
-		shoot_timer = 0
-		recoil = 200
-		walljump_force = 40_000
-		dash_power = 45_000
-		max_jumps = 500
-		max_dashes = 500
-		max_speed = 10_000
 
 func _process(delta):
 	if not is_on_floor():
-		velocity.y += gravity*delta
+		if not is_on_wall():
+			velocity.y += gravity*delta
+		else:
+			velocity.y += (gravity/4)*delta
 	else:
 		jumps = 0
 		dashes = max_dashes
@@ -115,13 +109,13 @@ func _process(delta):
 		if Time.get_ticks_msec() % 1000 <= 10:
 			jump_pad_jumps = 0
 	
-	if velocity.y <= -max_speed:
-		velocity.y = -max_speed
+		if velocity.y <= -max_speed:
+			velocity.y = -max_speed
 	
 	move_and_slide()
 
 func apply_knockback(weapon_angle: float, knockback_strength: float) -> void:
-	var knockback_direction = -Vector2(cos(weapon_angle), sin(weapon_angle))  # Inverse direction of the weapon's angle
+	var knockback_direction = -Vector2(cos(weapon_angle), sin(weapon_angle))
 	var knockback_force = knockback_direction * knockback_strength
 	
 	velocity += knockback_force*get_physics_process_delta_time()
@@ -150,7 +144,11 @@ func damage(amount: int):
 	if health == 0:
 		kill()
 
+var alive = true
 func kill():
+	if not alive:
+		return
+	alive = false
 	health = 0
 	velocity.x = 0
 	velocity.y = 0

@@ -10,9 +10,6 @@ static var instance: MainMenu
 func _ready():
 	instance = self
 	
-	$Options/Audio.value = Shared.get_real_aud_vol()
-	$Options/Music.value = Shared.get_real_mus_vol()
-	
 	await get_tree().process_frame
 	await get_tree().process_frame
 	
@@ -23,6 +20,8 @@ func _ready():
 	else:
 		music_player.queue_free()
 		music_player = get_parent().get_node("MusicPlayer")
+	
+	$Main/FreakyMode.visible = Shared.freaky_mode
 	
 	await get_tree().process_frame
 	await get_tree().process_frame
@@ -50,11 +49,9 @@ func _on_game_name_gui_input(event):
 func _on_back_pressed():
 	if not $AnimationPlayer.is_playing():
 		$AnimationPlayer.play("close_options")
-func _on_audio_drag_ended(_value_changed):
-	Shared.set_aud_vol($Options/Audio.value)
-func _on_music_drag_ended(_value_changed):
-	Shared.set_mus_vol($Options/Music.value)
-	music_player.volume_db = Shared.get_mus_vol()
+func _on_back_pressed2():
+	if not $AnimationPlayer.is_playing():
+		$AnimationPlayer.play("close_gamemodes")
 
 func _on_gamemode_normal_pressed():
 	Shared._gamemode = Shared.GAMEMODE.NORMAL
@@ -62,8 +59,3 @@ func _on_gamemode_normal_pressed():
 func _on_gamemode_endless_pressed():
 	Shared._gamemode = Shared.GAMEMODE.ENDLESS
 	get_tree().change_scene_to_packed(main_scene)
-
-
-func _on_back_pressed2():
-	if not $AnimationPlayer.is_playing():
-		$AnimationPlayer.play("close_gamemodes")

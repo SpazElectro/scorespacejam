@@ -305,8 +305,6 @@ label_settings = SubResource("LabelSettings_n1nju")
 metadata/_edit_use_anchors_ = true
 
 [node name="Options" parent="." instance=ExtResource("5_ulgmh")]
-offset_left = -512.0
-offset_right = -512.0
 
 [node name="GamemodeSelect" type="Control" parent="."]
 anchors_preset = 0

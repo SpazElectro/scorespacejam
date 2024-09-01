@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dm61kxy6oa6ig"]
+
+[ext_resource type="Script" path="res://resources/scripts/Snowman.gd" id="1_2a5is"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xbtun"]
+size = Vector2(20, 40)
+
+[node name="SnowmanTile" type="Area2D"]
+script = ExtResource("1_2a5is")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xbtun")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

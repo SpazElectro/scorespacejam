@@ -63,6 +63,8 @@ func _ready():
 	if Shared.get_gamemode() == Shared.GAMEMODE.NORMAL:
 		chunk_size = 800
 
+@export var snowman_tile: PackedScene
+
 var thank_you = false
 func fade_to_thank_you():
 	if thank_you:
@@ -178,11 +180,14 @@ func _process(delta):
 		local_player.position.y,
 	]
 
+
+@onready var tilemap_layer = $TileMapLayer
+
 func set_cell(x, y, tx, ty):
-	$TileMapLayer.set_cell(Vector2i(x, y), 0, Vector2i(tx, ty))
+	tilemap_layer.set_cell(Vector2i(x, y), 0, Vector2i(tx, ty))
 
 func get_cell(x: int, y: int) -> Variant:
-	var tile = $TileMapLayer.get_cell_atlas_coords(Vector2i(x, y))
+	var tile = tilemap_layer.get_cell_atlas_coords(Vector2i(x, y))
 	if tile.x == -1 and tile.y == -1:
 		return -1
 	return tile
@@ -212,15 +217,23 @@ func create_platform(x: int, y: int, width: int):
 				coin = coin_template.duplicate()
 				coin.process_mode = Node.PROCESS_MODE_INHERIT
 				coin.show()
-				coin.global_position = $TileMapLayer.to_global($TileMapLayer.map_to_local(Vector2i(current_x, y - 2)))
+				coin.global_position = tilemap_layer.to_global(tilemap_layer.map_to_local(Vector2i(current_x, y - 2)))
 				coins_container.add_child(coin)
 				spawn_point = coin.global_position
 			if not last_was_prop:
 				if i == width-1 and randi_range(1, 10) >= 7:
 					if ylevel == 4:
-						set_cell(current_x, y-1, 5+randi_range(-1, 0), 7)
+						# snowman
+						var tx = 5+randi_range(-1, 0)
+						set_cell(current_x, y-1, tx, 7)
 						last_was_prop = true
+						if tx == 5:
+							var snowman = snowman_tile.instantiate()
+							snowman.global_position = tilemap_layer.to_global(tilemap_layer.map_to_local(Vector2i(current_x, y - 1)))
+							snowman.tile_cords = Vector2i(current_x, y-1)
+							$Props.add_child(snowman)
 				if ylevel == 0 and randi_range(1, 10) >= 7:
+					# grass
 					set_cell(current_x, y-1, 4+randi_range(0, 3), 6)
 					last_was_prop = true
 			else: last_was_prop = false
@@ -235,7 +248,7 @@ func create_platform(x: int, y: int, width: int):
 		coin = coin_template.duplicate()
 		coin.process_mode = Node.PROCESS_MODE_INHERIT
 		coin.show()
-		coin.global_position = $TileMapLayer.to_global($TileMapLayer.map_to_local(Vector2i(clamped_x, y - 2)))
+		coin.global_position = tilemap_layer.to_global(tilemap_layer.map_to_local(Vector2i(clamped_x, y - 2)))
 		coins_container.add_child(coin)
 		spawn_point = coin.global_position
 		set_cell(clamped_x, y, 0, ylevel)
@@ -253,7 +266,7 @@ func create_platform(x: int, y: int, width: int):
 			continue
 		
 		var pad = jump_pad_scene.instantiate()
-		pad.global_position = $TileMapLayer.to_global($TileMapLayer.map_to_local(Vector2i(t[0], t[1])))
+		pad.global_position = tilemap_layer.to_global(tilemap_layer.map_to_local(Vector2i(t[0], t[1])))
 		pad.global_position.y -= 36
 		jump_pads_container.add_child(pad)
 		jump_pad_cooldown = 3

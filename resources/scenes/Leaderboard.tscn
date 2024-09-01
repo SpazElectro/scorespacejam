@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://doy1v1jerro7i"]
+
+[ext_resource type="FontFile" uid="uid://dcy4tcp1un3hm" path="res://assets/VCR_OSD_MONO_1.001.ttf" id="1_bli5l"]
+[ext_resource type="Script" path="res://resources/scripts/leaderboardgui.gd" id="1_g6ebi"]
+
+[node name="Leaderboard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g6ebi")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_right = 156.0
+offset_bottom = 328.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+
+[node name="Template" type="Label" parent="ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("1_bli5l")
+theme_override_font_sizes/font_size = 32
+text = "150,000"

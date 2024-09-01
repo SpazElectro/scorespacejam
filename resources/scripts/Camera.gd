@@ -23,7 +23,7 @@ func _process(delta):
 		position += shake_offset
 		shake_timer = max(shake_timer, 0)
 	else:
-		shake_offset = Vector2() # Reset shake_offset when shake ends
+		shake_offset = Vector2()
 
 static func shake_camera(intensity: float, duration: float):
 	instance.shake_intensity = intensity

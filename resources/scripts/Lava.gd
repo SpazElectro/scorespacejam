@@ -4,7 +4,7 @@ class_name Lava
 @export var base_speed = 50.0
 @export var speed_multiplier = 1.0
 @export var slow_down_distance = 800.0
-@export var offset_above_player = 100.0  # New exported variable to set how much above the player the lava should move
+@export var offset_above_player = 100.0
 static var is_in_space = false
 var has_hit = false
 var gradual_space_increase = 0
@@ -24,7 +24,6 @@ func _process(delta):
 		gradual_space_increase += -(delta*40) if has_hit else delta*10
 		return
 	if player_y > lava_y:
-		print("UBEr")
 		position.y = player_y + offset_above_player
 		return
 	

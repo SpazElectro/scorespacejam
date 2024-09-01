@@ -8,6 +8,7 @@ var _gamemode = GAMEMODE.ENDLESS
 var config = ConfigFile.new()
 var loaded_settings = false
 
+var cheats_enabled = false
 var freaky_mode = false
 var did_freaky_mode = false
 

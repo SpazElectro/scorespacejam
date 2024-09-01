@@ -55,29 +55,34 @@ func _on_authentication_request_completed(_result, _response_code, _headers, bod
 
 
 func _get_leaderboards():
-	var url = "https://api.lootlocker.io/game/leaderboards/"+leaderboard_key+"/list?count=10"
-	var headers = ["Content-Type: application/json", "x-session-token:"+session_token]
+	var url = "https://api.lootlocker.io/game/leaderboards/" + leaderboard_key + "/list?count=10"
+	var headers = ["Content-Type: application/json", "x-session-token:" + session_token]
 	
-	leaderboard_http = HTTPRequest.new()
+	var leaderboard_http = HTTPRequest.new()
 	add_child(leaderboard_http)
-	leaderboard_http.request_completed.connect(_on_leaderboard_request_completed)
-	leaderboard_http.request(url, headers, HTTPClient.METHOD_GET, "")
-
-func _on_leaderboard_request_completed(_result, response_code, _headers, body):
+	
+	var result = await leaderboard_http.request(url, headers, HTTPClient.METHOD_GET, "")
+	if result != OK:
+		print("Failed to make request.")
+		return ""
+	
+	await leaderboard_http.request_completed
+	var response_code = leaderboard_http.get_response_code()
+	var body = leaderboard_http.get_body_as_string()
+	
 	if response_code == 403:
-		return
+		print("Forbidden request.")
+		return ""
 	var json = JSON.new()
-	json.parse(body.get_string_from_utf8())
-	var leaderboardFormatted = ""
-	for n in json.get_data().items.size():
-		leaderboardFormatted += str(json.get_data().items[n].rank)+str(". ")
-		leaderboardFormatted += str(json.get_data().items[n].player.id)+str(" - ")
-		leaderboardFormatted += str(json.get_data().items[n].score)+str("\n")
-	print(leaderboardFormatted)
-
+	var parse_result = json.parse(body)
+	if parse_result != OK:
+		print("Failed to parse JSON.")
+		return ""
+	
+	return json.get_data()
 
 func _upload_score(score: int):
-	if Shared.did_freaky_mode or Shared.freaky_mode:
+	if Shared.did_freaky_mode or Shared.freaky_mode or Shared.cheats_enabled:
 		return
 	var data = { "score": str(score) }
 	var headers = ["Content-Type: application/json", "x-session-token:"+session_token]
