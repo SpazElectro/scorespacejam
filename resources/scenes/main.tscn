@@ -687,6 +687,7 @@ position = Vector2(401, 123)
 [node name="Props" type="Node" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("3_435f8")]
+shoot_timer = 1.8
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(256, 320)

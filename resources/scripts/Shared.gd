@@ -10,8 +10,8 @@ var loaded_settings = false
 
 var cheats_enabled = false
 var freaky_mode = false
-
 var testing_android = false
+
 var is_mobile = OS.get_name() == "Android" or (OS.is_debug_build() and testing_android)
 
 func _ready():

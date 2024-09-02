@@ -69,7 +69,7 @@ func _ready():
 	if spawn_point:
 		local_player.position = spawn_point
 	if Shared.get_gamemode() == Shared.GAMEMODE.NORMAL:
-		chunk_size = 800
+		chunk_size = 350
 	
 	if Shared.is_mobile:
 		$UI/MobileJump.show()
@@ -180,6 +180,7 @@ func generate_content_below(asdf, p, player_y: float):
 	times_generated += 1
 	
 	if Shared.get_gamemode() == Shared.GAMEMODE.NORMAL and times_generated > 1:
+		get_node("Lava").position.y += 2400
 		for i in range(10):
 			await get_tree().create_timer(0.15).timeout
 			$UI/Destination.visible = true
@@ -287,7 +288,7 @@ func create_platform(x: int, y: int, width: int):
 		if jump_pad_cooldown > 0:
 			jump_pad_cooldown -= 1
 			continue
-		if randi_range(0, 10) >= 8:
+		if randi_range(0, 10) >= 7:
 			var pad = jump_pad_scene.instantiate()
 			pad.global_position = tilemap_layer.to_global(tilemap_layer.map_to_local(Vector2i(t[0], t[1])))
 			pad.global_position.y -= 36

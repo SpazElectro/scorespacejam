@@ -169,7 +169,7 @@ func _process(delta):
 		$Weapon.look_at(mouse_pos)
 		
 		if Input.is_action_just_pressed("shoot") and _shoot_timer <= 0:
-			if !is_action_pressed("jump") and !just_dashed:
+			if ((!is_action_pressed("jump") and !just_dashed and !World.instance.get_node("UI").get_node("Joystick").is_pressed) if is_mobile else true):
 				apply_knockback(angle, recoil*1000)
 				$ShotgunSound.pitch_scale = randf_range(0.7, 1.0)
 				$ShotgunSound.play()

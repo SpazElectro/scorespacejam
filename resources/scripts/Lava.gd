@@ -32,7 +32,7 @@ func _process(delta):
 		return
 	
 	# I am very sorry
-	var adjusted_speed = 0
+	var adjusted_speed = -100 if Shared.is_mobile else 0
 	if player_y >= 359:
 		adjusted_speed = 10
 		#state = "A"
@@ -60,6 +60,8 @@ func _process(delta):
 				adjusted_speed = 400
 				#state = "F"
 	
+	if Shared.is_mobile:
+		adjusted_speed /= 2
 	#if state != prev_state:
 		#print("New lava state: %s" % [state])
 	
