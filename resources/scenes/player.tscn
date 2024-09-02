@@ -35,7 +35,7 @@ size = Vector2(20, 23)
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(2, 2)
 script = ExtResource("1_5xwv4")
-max_jumps = 3
+shoot_timer = 2.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -60,9 +60,9 @@ texture = ExtResource("4_a7b3o")
 
 [node name="RayCast2D" type="RayCast2D" parent="Weapon"]
 position = Vector2(97.5, -17.5)
-scale = Vector2(1, 1)
 target_position = Vector2(500, 0)
 collide_with_areas = true
+collide_with_bodies = false
 
 [node name="Muzzle" type="Sprite2D" parent="Weapon"]
 visible = false

@@ -7,7 +7,7 @@ class_name Player
 @export_range(1.0, 5.0) var shoot_timer: float = 2.4
 @export var recoil: float = 80
 @export_category("Forces")
-@export var jump_force = 20000
+@export var jump_force = 5000
 @export var walljump_force = 20000
 @export var dash_power = 30000
 @export_category("Limits")
@@ -15,8 +15,9 @@ class_name Player
 @export var max_dashes = 3
 @export var max_health = 3
 @export var max_speed = 2000
+@export var max_jump_time = 0.15
 
-var _shoot_timer = 0
+var _shoot_timer  = 0
 var jump_pad_jumps = 0
 var current_speed = 0.0
 var jumps = 0
@@ -26,6 +27,8 @@ var health = max_health:
 	set(value):
 		health = value
 		World.instance.update_health()
+var is_jumping = false
+var jump_time = 0.0
 
 func _ready():
 	$ShotgunSound.volume_db = Shared.get_aud_vol()
@@ -38,6 +41,7 @@ func _process(delta):
 			velocity.y += (gravity/4)*delta
 	else:
 		jumps = 0
+		is_jumping = false
 		dashes = max_dashes
 	
 	if health > 0:
@@ -46,6 +50,8 @@ func _process(delta):
 			# walljump on the platforms
 			if not is_on_floor() and is_on_wall() and (position.x >= 0 and position.x <= 60 and $AnimatedSprite2D.flip_h == false) or (position.x >= 460 and $AnimatedSprite2D.flip_h == true) and round(velocity.y) != 0:
 				# walljump
+				is_jumping = false
+				jump_time = 0.0
 				velocity.x -= (float(round(current_speed/200))/10+1)*(walljump_force*(1 if $AnimatedSprite2D.flip_h else -1)*delta)
 				jumps -= 1 # allow the player to jump
 			if jumps < max_jumps:
@@ -53,8 +59,19 @@ func _process(delta):
 				if jumps == 1:
 					jmp = 1.5
 				velocity.y -= gravity*delta
-				velocity.y -= jump_force*jmp*delta
+				is_jumping = true
+				jump_time = 0.0
+				velocity.y -= jump_force * jmp * delta
 				jumps += 1
+		elif Input.is_action_pressed("jump") and is_jumping:
+			jump_time += delta
+			if jump_time < max_jump_time:
+				velocity.y -= gravity * delta
+				velocity.y -= jump_force * delta
+			else:
+				is_jumping = false
+		elif Input.is_action_just_released("jump"):
+			is_jumping = false
 		if Input.is_action_just_pressed("dash") and dashes > 0:
 			var direction = 1 if $AnimatedSprite2D.flip_h else -1
 			velocity.x += direction*dash_power*delta
@@ -99,6 +116,14 @@ func _process(delta):
 			_shoot_timer = shoot_timer
 			
 			Camera.shake_camera(recoil, 0.1)
+			
+			if $Weapon/RayCast2D.is_colliding():
+				var col = $Weapon/RayCast2D.get_collider()
+				if col is Snowman:
+					col._on_area_entered($Area2D)
+				elif col is Coin:
+					World.instance.coins += 1
+					col.get_node("AnimationPlayer").play("collect")
 			
 			$Weapon/Muzzle.visible = true
 			await get_tree().process_frame

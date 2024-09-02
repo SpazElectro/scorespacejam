@@ -16,27 +16,28 @@ func _ready():
 func _process(delta):
 	var player_y = World.instance.local_player.position.y
 	var lava_y = position.y
+	var player_speed = World.instance.local_player.current_speed
 	
 	if is_in_space:
-		if abs(lava_y-player_y) >= 900 and abs(gradual_space_increase) >= 100:
+		if abs(lava_y - player_y) >= 900 and abs(gradual_space_increase) >= 100:
 			World.instance.fade_to_thank_you()
-		position.y = lerp(position.y, player_y+100-gradual_space_increase, 0.5)
-		gradual_space_increase += -(delta*40) if has_hit else delta*10
+		position.y = lerp(position.y, player_y + 100 - gradual_space_increase, 0.5)
+		gradual_space_increase += -(delta * 40) if has_hit else delta * 10
 		return
+	
 	if player_y > lava_y:
 		position.y = player_y + offset_above_player
 		return
 	
 	var distance_to_player = abs(player_y - lava_y)
 	var adjusted_multiplier = speed_multiplier
+	
 	if distance_to_player < slow_down_distance:
 		adjusted_multiplier /= 2
 	else:
-		adjusted_multiplier *= 4
+		adjusted_multiplier *= 2
 	
-	var adjusted_speed = base_speed * (
-		1 + (adjusted_multiplier)
-	)
+	var adjusted_speed = base_speed + (player_speed * adjusted_multiplier * 0.9)
 	
 	position.y -= adjusted_speed * delta
 

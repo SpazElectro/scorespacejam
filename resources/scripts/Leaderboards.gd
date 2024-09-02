@@ -62,7 +62,7 @@ func _get_leaderboards(tries=0):
 	var url = "https://api.lootlocker.io/game/leaderboards/" + leaderboard_key + "/list?count=10"
 	var headers = ["Content-Type: application/json", "x-session-token:" + session_token]
 	
-	var leaderboard_http = HTTPRequest.new()
+	leaderboard_http = HTTPRequest.new()
 	add_child(leaderboard_http)
 	
 	var result = leaderboard_http.request(url, headers, HTTPClient.METHOD_GET, "")

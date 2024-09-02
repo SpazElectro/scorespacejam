@@ -1,4 +1,5 @@
 extends Area2D
+class_name Coin
 
 func _ready():
 	$AudioStreamPlayer2D.volume_db = Shared.get_aud_vol()
