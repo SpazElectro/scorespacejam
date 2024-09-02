@@ -29,11 +29,16 @@ var splashes = [
 	"noob‼️‼️",
 	"I don't know what to put here",
 	"I should go back to work",
-	"Fun fact: this is my first game",
+	"fun fact: this is my first game",
 	"I love godot",
 	"ChatGPT my beloved 🥰",
 	"toasted",
 	"get gud",
+	"don't click on the game name...",
+	"time to get freaky :3",
+	"fun fact: this was almost a zombie game",
+	"KILL THE SNOWMEN!!!",
+	"ITS THE SNOWMENS FAULT!!"
 ]
 
 var coins = 0
@@ -70,6 +75,8 @@ func fade_to_thank_you():
 	if thank_you:
 		return
 	thank_you = true
+	$UI/Stars.emitting = true
+	await get_tree().create_timer(2.0).timeout
 	$FadeLayer.visible = true
 	var tween = get_tree().create_tween()
 	tween.tween_property($UI/Subtitle, "visible_ratio", 1, 3.0)
@@ -285,21 +292,31 @@ func create_walls(from: int, to: int):
 		set_cell(-1, y, 7, 2)
 		set_cell(16, y, 7, 2)
 
-func update_health():
-	var heart_rect = Rect2(Vector2(72, 36), Vector2(18, 18))
-	var no_heart_rect = Rect2(Vector2(108, 36), Vector2(18, 18))
+func convert_time(seconds: float) -> String:
+	var total_seconds = int(seconds)
+	var minutes = int(total_seconds / 60)
+	var seconds_remaining = total_seconds % 60
 	
-	for i in range(local_player.max_health):
-		var health_node = get_node("UI/Health/" + str(i + 1))
-		if i < local_player.health:
-			health_node.region_rect = heart_rect
-		else:
-			health_node.region_rect = no_heart_rect
+	var time_str = str(minutes).pad_zeros(2) + ":" + str(seconds_remaining).pad_zeros(2)
+	return time_str
+
+func update_health():
+	#var heart_rect = Rect2(Vector2(72, 36), Vector2(18, 18))
+	#var no_heart_rect = Rect2(Vector2(108, 36), Vector2(18, 18))
+	
+	#for i in range(local_player.max_health):
+	#	var health_node = get_node("UI/Health/" + str(i + 1))
+	#	if i < local_player.health:
+	#		health_node.region_rect = heart_rect
+	#	else:
+	#		health_node.region_rect = no_heart_rect
 	
 	if local_player.health == 0:
 		$UI/DeadMenu/SplashLabel.text = splashes.pick_random()
+		$UI/DeadMenu/Stats.text = $UI/DeadMenu/Stats.text.replace("%snowmen%", str(Snowman.SNOWMAN_KILLS)).replace("%coins%", str(coins)).replace("%time%", convert_time(local_player.time_alive))
 		$UI/DeadMenu.visible = true
-		$Lava.base_speed = 0
+		$Lava.set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
+		Snowman.SNOWMAN_KILLS = 0
 
 func on_retry():
 	get_tree().reload_current_scene()

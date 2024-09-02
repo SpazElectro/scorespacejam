@@ -29,9 +29,7 @@ var health = max_health:
 		World.instance.update_health()
 var is_jumping = false
 var jump_time = 0.0
-
-func _ready():
-	$ShotgunSound.volume_db = Shared.get_aud_vol()
+var time_alive = 0.0
 
 func _process(delta):
 	if not is_on_floor():
@@ -45,6 +43,8 @@ func _process(delta):
 		dashes = max_dashes
 	
 	if health > 0:
+		time_alive += delta
+		
 		if Input.is_action_just_pressed("jump"):
 			# the position checks are just so we dont
 			# walljump on the platforms
@@ -78,6 +78,7 @@ func _process(delta):
 			jumps = 0 # nicer control
 			dashes -= 1
 			$DashTimer.start()
+			$DashSound.play()
 		
 		if Input.is_action_pressed("left"):
 			$AnimatedSprite2D.flip_h = false
@@ -140,6 +141,13 @@ func _process(delta):
 			velocity.y = -max_speed
 	
 	move_and_slide()
+	
+	if position.x < -64:
+		position.x = 0
+		print("Out of bounds! < -64")
+	if position.x > 565:
+		position.x = 512-64
+		print("Out of bounds! > 565")
 
 func apply_knockback(weapon_angle: float, knockback_strength: float) -> void:
 	var knockback_direction = -Vector2(cos(weapon_angle), sin(weapon_angle))
@@ -183,6 +191,8 @@ func kill():
 	if Shared.get_gamemode() == Shared.GAMEMODE.ENDLESS:
 		Leaderboards._upload_score(World.instance.score)
 		Leaderboards._get_leaderboards()
+	
+	$DeathSound.play()
 
 func _on_dash_timer_timeout():
 	dashes = min(dashes+1, max_dashes)

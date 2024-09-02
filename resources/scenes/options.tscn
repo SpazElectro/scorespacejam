@@ -81,6 +81,8 @@ offset_bottom = 585.0
 text = "Cheats"
 
 [node name="Leaderboard" parent="." instance=ExtResource("4_rvp2b")]
+process_mode = 4
+visible = false
 layout_mode = 1
 offset_left = 4.0
 offset_top = 226.0

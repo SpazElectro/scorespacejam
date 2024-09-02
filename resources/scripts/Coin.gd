@@ -2,7 +2,6 @@ extends Area2D
 class_name Coin
 
 func _ready():
-	$AudioStreamPlayer2D.volume_db = Shared.get_aud_vol()
 	await get_tree().create_timer(randf()).timeout
 	$AnimatedSprite2D.play("default")
 

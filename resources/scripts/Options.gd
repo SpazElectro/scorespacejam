@@ -41,22 +41,25 @@ func _ready():
 	
 	if Shared.freaky_mode:
 		$FreakyWarning.visible = true
-	#Shared.update_music()
+	if Shared.get_gamemode() == Shared.GAMEMODE.ENDLESS:
+		$Leaderboard.visible = true
+		$Leaderboard.process_mode = Node.PROCESS_MODE_INHERIT
 
 func _input(event):
 	if not in_menu:
 		if event is InputEventKey:
 			if event.pressed:
 				if event.keycode == KEY_ESCAPE:
-					if get_tree().paused:
-						unpause()
-					else: pause()
+					if World.instance.local_player.alive:
+						if get_tree().paused:
+							unpause()
+						else:
+							pause()
 
 func _on_audio_drag_ended(_value_changed):
 	Shared.set_aud_vol($Audio.value)
 func _on_music_drag_ended(_value_changed):
 	Shared.set_mus_vol($Music.value)
-	get_tree().root.get_node("MusicPlayer").volume_db = Shared.get_mus_vol()
 
 func _go_to_main_menu():
 	unpause()

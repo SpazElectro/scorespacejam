@@ -19,7 +19,7 @@ func _process(delta):
 	var player_speed = World.instance.local_player.current_speed
 	
 	if is_in_space:
-		if abs(lava_y - player_y) >= 900 and abs(gradual_space_increase) >= 100:
+		if abs(lava_y - player_y) >= 700 and abs(gradual_space_increase) >= 100:
 			World.instance.fade_to_thank_you()
 		position.y = lerp(position.y, player_y + 100 - gradual_space_increase, 0.5)
 		gradual_space_increase += -(delta * 40) if has_hit else delta * 10
@@ -37,13 +37,17 @@ func _process(delta):
 	else:
 		adjusted_multiplier *= 2
 	
-	var adjusted_speed = base_speed + (player_speed * adjusted_multiplier * 0.9)
+	var adjusted_speed = base_speed + -(player_y/10 * adjusted_multiplier * 0.9)
+	adjusted_speed /= 1 if player_speed<=0 else player_speed
+	adjusted_speed = max(adjusted_speed, 100)
+	adjusted_speed = min(adjusted_speed, 1000)
 	
 	position.y -= adjusted_speed * delta
 
 func _on_area_entered(area):
 	if area.get_parent() is Player:
-		if not is_in_space:
-			area.get_parent().kill()
-		else:
-			has_hit = true
+		if area.get_parent().alive:
+			if not is_in_space:
+				area.get_parent().kill()
+			else:
+				has_hit = true

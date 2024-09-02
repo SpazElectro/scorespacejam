@@ -136,6 +136,7 @@ _data = {
 script = ExtResource("1_oqjaq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(2, 2, 2, 1)
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_fw4xp")
 frame_progress = 0.616924

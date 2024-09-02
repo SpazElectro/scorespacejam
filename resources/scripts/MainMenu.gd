@@ -4,7 +4,6 @@ class_name MainMenu
 # note:
 # add dash feedback
 # add dash sound
-# add shotgun raycast to kill snowman
 
 var main_scene: PackedScene = preload("res://resources/scenes/main.tscn")
 
@@ -28,11 +27,7 @@ func _ready():
 	
 	$Main/FreakyMode.visible = Shared.freaky_mode
 	$Options/FreakyWarning.visible = Shared.did_freaky_mode
-	
-	await get_tree().process_frame
-	await get_tree().process_frame
-	
-	Shared.update_music()
+	Shared._gamemode = Shared.GAMEMODE.ENDLESS
 
 func _on_play_pressed():
 	$AnimationPlayer.play("open_gamemodes")

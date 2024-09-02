@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bel7jmcgldwwf"]
+[gd_scene load_steps=32 format=3 uid="uid://bel7jmcgldwwf"]
 
 [ext_resource type="Script" path="res://resources/scripts/MainMenu.gd" id="1_r8ul0"]
 [ext_resource type="Texture2D" uid="uid://csm13uwlsfiur" path="res://assets/backgrounds/backgroundCastles.png" id="2_g5tid"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://c8xb2a3elacp3" path="res://assets/inputprompts/keyboard_space.svg" id="17_qojm0"]
 [ext_resource type="Texture2D" uid="uid://duttt1d6balld" path="res://assets/inputprompts/keyboard_space_outline.svg" id="18_vjch3"]
 [ext_resource type="Texture2D" uid="uid://kpc87wqt6k16" path="res://assets/inputprompts/mouse_left.svg" id="19_l2s4q"]
+[ext_resource type="Script" path="res://resources/scripts/MusicLoop.gd" id="20_2rdwy"]
 
 [sub_resource type="Animation" id="Animation_qfx74"]
 length = 0.001
@@ -389,6 +390,8 @@ anchor_mode = 0
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_7s6u2")
+bus = &"Music"
+script = ExtResource("20_2rdwy")
 
 [connection signal="pressed" from="Main/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Main/Options" to="." method="_on_options_pressed"]
@@ -397,3 +400,4 @@ stream = ExtResource("5_7s6u2")
 [connection signal="pressed" from="GamemodeSelect/Normal" to="." method="_on_gamemode_normal_pressed"]
 [connection signal="pressed" from="GamemodeSelect/Endless" to="." method="_on_gamemode_endless_pressed"]
 [connection signal="pressed" from="GamemodeSelect/Back" to="." method="_on_back_pressed2"]
+[connection signal="finished" from="MusicPlayer" to="MusicPlayer" method="_on_finished"]

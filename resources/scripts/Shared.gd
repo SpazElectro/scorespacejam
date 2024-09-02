@@ -14,6 +14,7 @@ var did_freaky_mode = false
 
 func _ready():
 	_load_settings()
+	set_process(true)
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
@@ -33,9 +34,9 @@ func _save_settings():
 	if error != OK:
 		print("Failed trying to save settings! error: %d" % [error])
 
-func update_music():
-	_load_settings()
-	get_parent().get_node("MusicPlayer").volume_db = get_mus_vol()
+func _process(delta):
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), get_aud_vol())
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), get_mus_vol())
 
 func get_gamemode():
 	return _gamemode

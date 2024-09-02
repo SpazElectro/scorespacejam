@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://b7abyjoywj2xi"]
+[gd_scene load_steps=39 format=4 uid="uid://b7abyjoywj2xi"]
 
 [ext_resource type="Texture2D" uid="uid://bx6e0ohnt0shd" path="res://assets/tiles.png" id="1_ex228"]
 [ext_resource type="Script" path="res://resources/scripts/World.gd" id="1_ta3c1"]
@@ -17,6 +17,13 @@
 [ext_resource type="Texture2D" uid="uid://bi8icbn358v4p" path="res://assets/destination.png" id="10_lxm8u"]
 [ext_resource type="Texture2D" uid="uid://b4lchj0lge652" path="res://assets/backgrounds/backgroundForest.png" id="10_x3c8t"]
 [ext_resource type="Texture2D" uid="uid://3n8414wjvhkb" path="res://assets/particles/trace_01.png" id="11_3b3vg"]
+[ext_resource type="Texture2D" uid="uid://clu4xa2ymfhaw" path="res://assets/particles/star_01.png" id="12_7rbku"]
+
+[sub_resource type="Environment" id="Environment_e0sfn"]
+background_mode = 3
+glow_enabled = true
+glow_blend_mode = 1
+glow_hdr_threshold = 0.7
 
 [sub_resource type="LabelSettings" id="LabelSettings_f1h6l"]
 font = ExtResource("2_xfbyn")
@@ -62,13 +69,45 @@ shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ma02g"]
 
+[sub_resource type="Curve" id="Curve_7rghk"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 1.4, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_chva4"]
+curve = SubResource("Curve_7rghk")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_krpny"]
 particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(256, 0, 0)
-gravity = Vector3(0, -980, 0)
-scale_min = 0.01
-scale_max = 0.03
+gravity = Vector3(0, -960, 0)
+scale_min = 0.05
+scale_max = 0.05
+scale_curve = SubResource("CurveTexture_chva4")
+
+[sub_resource type="Curve" id="Curve_4h6sh"]
+_data = [Vector2(0, 0), 0.0, 1.98701, 0, 1, Vector2(0.503268, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.01316, 0.0, 1, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_pkum7"]
+curve = SubResource("Curve_4h6sh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4eysu"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(256, 350, 0)
+angle_min = -720.0
+angle_max = 720.0
+angular_velocity_min = -45.0
+angular_velocity_max = 45.0
+radial_velocity_min = 50.0
+radial_velocity_max = 50.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.05
+scale_max = 0.05
+scale_curve = SubResource("CurveTexture_pkum7")
+hue_variation_min = -0.1
+hue_variation_max = 0.1
 
 [sub_resource type="LabelSettings" id="LabelSettings_ax2yi"]
 font_size = 48
@@ -349,6 +388,9 @@ shader_parameter/wave_speed = 10.0
 script = ExtResource("1_ta3c1")
 snowman_tile = ExtResource("2_mm62g")
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_e0sfn")
+
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Score" type="Label" parent="UI"]
@@ -439,10 +481,21 @@ horizontal_alignment = 1
 offset_top = 166.0
 offset_right = 512.0
 offset_bottom = 224.0
-text = "😀😀😀hello :3"
+text = "😀😀😀hello :3 polygon do nat"
 label_settings = SubResource("LabelSettings_685a3")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Stats" type="Label" parent="UI/DeadMenu"]
+offset_left = 10.0
+offset_top = 327.0
+offset_right = 273.0
+offset_bottom = 530.0
+text = "You killed %snowmen% snowmen
+You collected %coins% coin(s)
+You lived for %time%
+"
+label_settings = SubResource("LabelSettings_685a3")
 
 [node name="Button" type="Button" parent="UI/DeadMenu"]
 offset_top = 287.0
@@ -488,6 +541,15 @@ amount = 256
 process_material = SubResource("ParticleProcessMaterial_krpny")
 texture = ExtResource("11_3b3vg")
 lifetime = 1.15
+fixed_fps = 60
+
+[node name="Stars" type="GPUParticles2D" parent="UI"]
+position = Vector2(256, 330)
+emitting = false
+amount = 256
+process_material = SubResource("ParticleProcessMaterial_4eysu")
+texture = ExtResource("12_7rbku")
+lifetime = 5.0
 fixed_fps = 60
 
 [node name="FadeLayer" type="CanvasLayer" parent="."]
@@ -589,6 +651,7 @@ shape = SubResource("RectangleShape2D_sama4")
 z_index = 2
 position = Vector2(0, 642)
 script = ExtResource("8_tkpfa")
+speed_multiplier = 4.0
 
 [node name="ColorRect" type="ColorRect" parent="Lava"]
 material = SubResource("ShaderMaterial_3bhe7")
