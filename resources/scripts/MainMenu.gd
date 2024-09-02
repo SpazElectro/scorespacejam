@@ -1,7 +1,8 @@
 extends Control
 class_name MainMenu
 
-var main_scene: PackedScene = preload("res://resources/scenes/main.tscn")
+@export var main_scene: PackedScene
+
 
 var music_player: AudioStreamPlayer
 
@@ -37,7 +38,6 @@ func _on_game_name_gui_input(event):
 			$Main/FreakyMode.visible = not $Main/FreakyMode.visible
 			$Options/FreakyWarning.visible = true
 			Shared.freaky_mode = $Main/FreakyMode.visible
-			Shared.did_freaky_mode = true
 			
 			if Shared.freaky_mode:
 				Console.enable()

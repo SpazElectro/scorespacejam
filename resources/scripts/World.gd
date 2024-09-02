@@ -304,23 +304,12 @@ func convert_time(seconds: float) -> String:
 	var time_str = str(minutes).pad_zeros(2) + ":" + str(seconds_remaining).pad_zeros(2)
 	return time_str
 
-func update_health():
-	#var heart_rect = Rect2(Vector2(72, 36), Vector2(18, 18))
-	#var no_heart_rect = Rect2(Vector2(108, 36), Vector2(18, 18))
-	
-	#for i in range(local_player.max_health):
-	#	var health_node = get_node("UI/Health/" + str(i + 1))
-	#	if i < local_player.health:
-	#		health_node.region_rect = heart_rect
-	#	else:
-	#		health_node.region_rect = no_heart_rect
-	
-	if local_player.health == 0:
-		$UI/DeadMenu/SplashLabel.text = splashes.pick_random()
-		$UI/DeadMenu/Stats.text = $UI/DeadMenu/Stats.text.replace("%snowmen%", str(Snowman.SNOWMAN_KILLS)).replace("%coins%", str(coins)).replace("%time%", convert_time(local_player.time_alive)).replace("%score%", str(int(score)))
-		$UI/Score.visible = false
-		$UI/DeadMenu.visible = true
-		$Lava.set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
+func on_player_died():
+	$UI/DeadMenu/SplashLabel.text = splashes.pick_random()
+	$UI/DeadMenu/Stats.text = $UI/DeadMenu/Stats.text.replace("%snowmen%", str(Snowman.SNOWMAN_KILLS)).replace("%coins%", str(coins)).replace("%time%", convert_time(local_player.time_alive)).replace("%score%", str(int(score))).replace("%coinplural%", "s" if coins != 1 else "").replace("%snowmanplural%", "e" if Snowman.SNOWMAN_KILLS != 1 else "a")
+	$UI/Score.visible = false
+	$UI/DeadMenu.visible = true
+	$Lava.set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
 
 func on_retry():
 	get_tree().reload_current_scene()

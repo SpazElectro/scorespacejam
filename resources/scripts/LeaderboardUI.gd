@@ -25,7 +25,7 @@ func init_board(key: String):
 			var i = 0
 			for item in items:
 				var e: Label = template.duplicate()
-				e.text = format_number_with_commas(item.score)
+				e.text = str(i+1)+". " + format_number_with_commas(item.score)
 				e.visible = true
 				if i == 0:
 					# first place

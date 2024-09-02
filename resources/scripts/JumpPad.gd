@@ -11,7 +11,7 @@ func _on_area_entered(area: Area2D):
 		return
 	if not area.get_parent() is Player:
 		return
-	if area.get_parent().health <= 0:
+	if not area.get_parent().alive:
 		return
 	if area.get_parent().jump_pad_jumps >= (3 if Shared.cheats_enabled else 2):
 		return

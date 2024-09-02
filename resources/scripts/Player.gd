@@ -13,7 +13,6 @@ class_name Player
 @export_category("Limits")
 @export var max_jumps = 2
 @export var max_dashes = 3
-@export var max_health = 3
 @export var max_speed = 2000
 @export var max_jump_time = 0.15
 
@@ -23,10 +22,6 @@ var current_speed = 0.0
 var jumps = 0
 var dashes = max_dashes
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-var health = max_health:
-	set(value):
-		health = value
-		World.instance.update_health()
 var is_jumping = false
 var jump_time = 0.0
 var time_alive = 0.0
@@ -42,7 +37,7 @@ func _process(delta):
 		is_jumping = false
 		dashes = max_dashes
 	
-	if health > 0:
+	if alive:
 		time_alive += delta
 		
 		if Input.is_action_just_pressed("jump"):
@@ -103,10 +98,9 @@ func _process(delta):
 			$AnimatedSprite2D.play("default")
 		
 		velocity.x += Input.get_axis("left", "right")*delta*speed
-	
-	current_speed = abs(velocity.x)
-	
-	if health > 0:
+		
+		current_speed = abs(velocity.x)
+		
 		var mouse_pos = get_global_mouse_position()
 		var angle = position.direction_to(mouse_pos).angle()
 		var gun_x = cos(angle) * weapon_orbit_radius
@@ -181,17 +175,11 @@ func on_collect_coin(area: Area2D):
 		x.get_node("AnimationPlayer").play("collect")
 	
 
-func damage(amount: int):
-	health -= max(amount, 0)
-	if health == 0:
-		kill()
-
 var alive = true
 func kill():
 	if not alive:
 		return
 	alive = false
-	health = 0
 	velocity.x = 0
 	velocity.y = 0
 	
@@ -199,9 +187,9 @@ func kill():
 		Leaderboards._upload_score("score", int(World.instance.score))
 		Leaderboards._upload_score("coins", int(World.instance.coins))
 		Leaderboards._upload_score("snowman", int(Snowman.SNOWMAN_KILLS))
-		
 	
 	$DeathSound.play()
+	World.instance.on_player_died()
 
 func _on_dash_timer_timeout():
 	dashes = min(dashes+1, max_dashes)

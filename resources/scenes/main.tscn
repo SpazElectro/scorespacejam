@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=4 uid="uid://b7abyjoywj2xi"]
+[gd_scene load_steps=41 format=4 uid="uid://b7abyjoywj2xi"]
 
 [ext_resource type="Texture2D" uid="uid://bx6e0ohnt0shd" path="res://assets/tiles.png" id="1_ex228"]
 [ext_resource type="Script" path="res://resources/scripts/World.gd" id="1_ta3c1"]
@@ -69,7 +69,15 @@ shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_tmlcm"]
 font = ExtResource("2_xfbyn")
-font_size = 12
+font_size = 21
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ok6um"]
+font = ExtResource("2_xfbyn")
+font_size = 24
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 5
@@ -495,32 +503,40 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Stats" type="Label" parent="UI/DeadMenu"]
-offset_left = -1.0
 offset_top = 165.0
-offset_right = 511.0
-offset_bottom = 250.0
+offset_right = 517.0
+offset_bottom = 262.0
 text = "Your score is %score%
-You collected %coins% coin(s)
+You collected %coins% coin%coinplural%
 You lived for %time%
-You killed %snowmen% snowmen"
+You killed %snowmen% snowm%snowmanplural%n"
 label_settings = SubResource("LabelSettings_tmlcm")
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="UI/DeadMenu"]
+offset_top = 320.0
+offset_right = 512.0
+offset_bottom = 352.0
+text = "Leaderboards"
+label_settings = SubResource("LabelSettings_ok6um")
 vertical_alignment = 1
 
 [node name="Leaderboard" parent="UI/DeadMenu" instance=ExtResource("8_01j2r")]
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_top = 250.0
-offset_bottom = 250.0
+offset_top = 350.0
+offset_bottom = 350.0
 grow_horizontal = 1
 grow_vertical = 1
+scale = Vector2(0.75, 0.75)
 
 [node name="Button" type="Button" parent="UI/DeadMenu"]
-offset_left = 91.0
-offset_top = 56.0
-offset_right = 401.0
-offset_bottom = 96.0
+offset_left = 86.0
+offset_top = 285.0
+offset_right = 396.0
+offset_bottom = 325.0
 theme = ExtResource("7_pafxl")
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("2_xfbyn")
@@ -529,10 +545,10 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_ma02g")
 text = "Retry"
 
 [node name="Button2" type="Button" parent="UI/DeadMenu"]
-offset_left = 91.0
-offset_top = 1.0
-offset_right = 401.0
-offset_bottom = 41.0
+offset_left = 108.0
+offset_top = 29.0
+offset_right = 418.0
+offset_bottom = 69.0
 theme = ExtResource("7_pafxl")
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("2_xfbyn")

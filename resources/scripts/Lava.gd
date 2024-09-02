@@ -13,6 +13,9 @@ func _ready():
 	is_in_space = false
 	show()
 
+#var prev_state = ""
+#var state = ""
+
 func _process(delta):
 	var player_y = World.instance.local_player.position.y
 	var lava_y = position.y
@@ -32,6 +35,7 @@ func _process(delta):
 	var adjusted_speed = 0
 	if player_y >= 359:
 		adjusted_speed = 10
+		#state = "A"
 	else:
 		var ratio = abs(player_y)/abs(lava_y)
 		var distance = abs(player_y-lava_y)
@@ -39,18 +43,28 @@ func _process(delta):
 		if ratio <= 1.1:
 			if distance >= 800:
 				adjusted_speed = 1200
+				#state = "B"
 			else:
+				# these 2 are very snappy
 				if distance >= 300:
 					adjusted_speed = 600
+					#state = "C"
 				else:
 					adjusted_speed = 300
+					#state = "D"
 		else:
 			if distance >= 800:
-				adjusted_speed = 2000*(distance/100)*ratio
+				adjusted_speed = 1200*(distance/100)
+				#state = "E"
 			else:
-				adjusted_speed = 400/ratio
+				adjusted_speed = 400
+				#state = "F"
+	
+	#if state != prev_state:
+		#print("New lava state: %s" % [state])
 	
 	position.y -= adjusted_speed * delta
+	#prev_state = state
 
 func _on_area_entered(area):
 	if area.get_parent() is Player:

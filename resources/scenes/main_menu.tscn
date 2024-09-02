@@ -1,6 +1,7 @@
-[gd_scene load_steps=32 format=3 uid="uid://bel7jmcgldwwf"]
+[gd_scene load_steps=33 format=3 uid="uid://bel7jmcgldwwf"]
 
 [ext_resource type="Script" path="res://resources/scripts/MainMenu.gd" id="1_r8ul0"]
+[ext_resource type="PackedScene" uid="uid://b7abyjoywj2xi" path="res://resources/scenes/main.tscn" id="2_5bbr1"]
 [ext_resource type="Texture2D" uid="uid://csm13uwlsfiur" path="res://assets/backgrounds/backgroundCastles.png" id="2_g5tid"]
 [ext_resource type="Theme" uid="uid://bur45gcdny8mk" path="res://resources/default.tres" id="3_q8oob"]
 [ext_resource type="FontFile" uid="uid://dcy4tcp1un3hm" path="res://assets/VCR_OSD_MONO_1.001.ttf" id="4_2disp"]
@@ -151,6 +152,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_r8ul0")
+main_scene = ExtResource("2_5bbr1")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
