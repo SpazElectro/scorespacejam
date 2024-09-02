@@ -1,10 +1,6 @@
 extends Control
 class_name MainMenu
 
-# note:
-# add dash feedback
-# add dash sound
-
 var main_scene: PackedScene = preload("res://resources/scenes/main.tscn")
 
 var music_player: AudioStreamPlayer
@@ -26,7 +22,6 @@ func _ready():
 		music_player = get_parent().get_node("MusicPlayer")
 	
 	$Main/FreakyMode.visible = Shared.freaky_mode
-	$Options/FreakyWarning.visible = Shared.did_freaky_mode
 	Shared._gamemode = Shared.GAMEMODE.ENDLESS
 
 func _on_play_pressed():

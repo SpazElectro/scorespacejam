@@ -197,7 +197,7 @@ offset_top = 64.0
 offset_right = 511.0
 offset_bottom = 107.0
 mouse_filter = 1
-text = "Placeholder"
+text = "Lava Tower"
 label_settings = SubResource("LabelSettings_fwf2c")
 horizontal_alignment = 1
 

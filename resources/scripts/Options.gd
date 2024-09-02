@@ -39,8 +39,7 @@ func _ready():
 	$Audio.value = Shared.get_real_aud_vol()
 	$Music.value = Shared.get_real_mus_vol()
 	
-	if Shared.freaky_mode:
-		$FreakyWarning.visible = true
+	$FreakyWarning.visible = Shared.freaky_mode
 	if Shared.get_gamemode() == Shared.GAMEMODE.ENDLESS:
 		$Leaderboard.visible = true
 		$Leaderboard.process_mode = Node.PROCESS_MODE_INHERIT

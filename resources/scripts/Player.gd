@@ -79,6 +79,13 @@ func _process(delta):
 			dashes -= 1
 			$DashTimer.start()
 			$DashSound.play()
+			$Trace03.position.x = -(4*direction)
+			$Trace04.position.x = -(4*direction)
+			$Trace03.show()
+			$Trace04.show()
+			await get_tree().create_timer(0.05).timeout
+			$Trace03.hide()
+			$Trace04.hide()
 		
 		if Input.is_action_pressed("left"):
 			$AnimatedSprite2D.flip_h = false

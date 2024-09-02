@@ -10,7 +10,6 @@ var loaded_settings = false
 
 var cheats_enabled = false
 var freaky_mode = false
-var did_freaky_mode = false
 
 func _ready():
 	_load_settings()
@@ -34,7 +33,7 @@ func _save_settings():
 	if error != OK:
 		print("Failed trying to save settings! error: %d" % [error])
 
-func _process(delta):
+func _process(_delta):
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), get_aud_vol())
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), get_mus_vol())
 

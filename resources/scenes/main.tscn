@@ -117,7 +117,7 @@ font_size = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_q5ye0"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1vu8b"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jg0ob"]
 texture = ExtResource("1_ex228")
 texture_region_size = Vector2i(18, 18)
 0:0/0 = 0
@@ -373,7 +373,7 @@ texture_region_size = Vector2i(18, 18)
 
 [sub_resource type="TileSet" id="TileSet_e2c6y"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_1vu8b")
+sources/0 = SubResource("TileSetAtlasSource_jg0ob")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sama4"]
 size = Vector2(516, 36)
@@ -487,26 +487,38 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Stats" type="Label" parent="UI/DeadMenu"]
-offset_left = 10.0
-offset_top = 327.0
-offset_right = 273.0
-offset_bottom = 530.0
-text = "You killed %snowmen% snowmen
+offset_top = 250.0
+offset_right = 272.0
+offset_bottom = 453.0
+text = "Your score is %score%
 You collected %coins% coin(s)
 You lived for %time%
-"
+You killed %snowmen% snowmen"
 label_settings = SubResource("LabelSettings_685a3")
 
 [node name="Button" type="Button" parent="UI/DeadMenu"]
-offset_top = 287.0
-offset_right = 441.0
-offset_bottom = 327.0
-theme_type_variation = &"FlatButton"
+offset_left = 91.0
+offset_top = 474.0
+offset_right = 401.0
+offset_bottom = 514.0
+theme = ExtResource("7_pafxl")
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("2_xfbyn")
 theme_override_font_sizes/font_size = 36
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ma02g")
 text = "Retry"
+
+[node name="Button2" type="Button" parent="UI/DeadMenu"]
+offset_left = 91.0
+offset_top = 530.0
+offset_right = 401.0
+offset_bottom = 570.0
+theme = ExtResource("7_pafxl")
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_xfbyn")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ma02g")
+text = "Main Menu"
 
 [node name="Leaderboard" parent="UI/DeadMenu" instance=ExtResource("8_01j2r")]
 anchors_preset = 0
@@ -671,6 +683,7 @@ position = Vector2(256, 18)
 shape = SubResource("RectangleShape2D_sama4")
 
 [connection signal="pressed" from="UI/DeadMenu/Button" to="." method="on_retry"]
+[connection signal="pressed" from="UI/DeadMenu/Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="FadeLayer/ThankYou/Play" to="." method="_on_play_pressed"]
 [connection signal="area_entered" from="Coins/CoinTemplate" to="Player" method="on_collect_coin"]
 [connection signal="area_entered" from="Lava" to="Lava" method="_on_area_entered"]

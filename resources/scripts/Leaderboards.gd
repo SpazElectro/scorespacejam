@@ -88,7 +88,7 @@ func _get_leaderboards(tries=0):
 	return json.get_data()
 
 func _upload_score(score: int):
-	if Shared.did_freaky_mode or Shared.freaky_mode or Shared.cheats_enabled:
+	if Shared.freaky_mode or Shared.cheats_enabled:
 		return
 	var data = { "score": str(score) }
 	var headers = ["Content-Type: application/json", "x-session-token:"+session_token]

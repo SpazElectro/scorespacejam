@@ -38,14 +38,15 @@ var splashes = [
 	"time to get freaky :3",
 	"fun fact: this was almost a zombie game",
 	"KILL THE SNOWMEN!!!",
-	"ITS THE SNOWMENS FAULT!!"
+	"ITS THE SNOWMENS FAULT!!",
+	"jesse we need to cook jesse"
 ]
 
 var coins = 0
 var _score = 0
 var score = 0:
 	get:
-		return (-local_player.position.y+324) + (coins*100)
+		return (-local_player.position.y+324) + (coins*100) + (Snowman.SNOWMAN_KILLS*100)
 
 static var instance: World
 
@@ -92,6 +93,8 @@ func fade_to_thank_you():
 	tween.tween_property($FadeLayer/ThankYou, "modulate", Color(1, 1, 1, 1), 2.0)
 	tween.play()
 	$FadeLayer/ThankYou/Play.disabled = false
+	Shared._gamemode = Shared.GAMEMODE.ENDLESS
+
 	await tween.finished
 	print("Thank you for playing.")
 
@@ -190,9 +193,9 @@ func _process(delta):
 			_score = score
 	
 	$UI/Score.text = str(int(_score))
-	$UI/Speed.text = "YPOS: %f" % [
-		local_player.position.y,
-	]
+	#$UI/Speed.text = "YPOS: %f" % [
+	#	local_player.position.y,
+	#]
 
 
 @onready var tilemap_layer = $TileMapLayer
@@ -294,7 +297,7 @@ func create_walls(from: int, to: int):
 
 func convert_time(seconds: float) -> String:
 	var total_seconds = int(seconds)
-	var minutes = int(total_seconds / 60)
+	var minutes = int(float(total_seconds) / 60.0)
 	var seconds_remaining = total_seconds % 60
 	
 	var time_str = str(minutes).pad_zeros(2) + ":" + str(seconds_remaining).pad_zeros(2)
@@ -313,7 +316,7 @@ func update_health():
 	
 	if local_player.health == 0:
 		$UI/DeadMenu/SplashLabel.text = splashes.pick_random()
-		$UI/DeadMenu/Stats.text = $UI/DeadMenu/Stats.text.replace("%snowmen%", str(Snowman.SNOWMAN_KILLS)).replace("%coins%", str(coins)).replace("%time%", convert_time(local_player.time_alive))
+		$UI/DeadMenu/Stats.text = $UI/DeadMenu/Stats.text.replace("%snowmen%", str(Snowman.SNOWMAN_KILLS)).replace("%coins%", str(coins)).replace("%time%", convert_time(local_player.time_alive)).replace("%score%", str(int(score)))
 		$UI/DeadMenu.visible = true
 		$Lava.set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
 		Snowman.SNOWMAN_KILLS = 0
@@ -321,5 +324,9 @@ func update_health():
 func on_retry():
 	get_tree().reload_current_scene()
 
+# help what was this??
 func _on_play_pressed():
 	get_tree().change_scene_to_packed(Commands.main_menu)
+
+func _on_button_2_pressed():
+	_on_play_pressed()

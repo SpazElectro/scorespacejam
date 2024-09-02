@@ -14,3 +14,4 @@ func _on_area_entered(area: Area2D):
 	SNOWMAN_KILLS += 1
 	World.instance.set_cell(tile_cords.x, tile_cords.y, 4, 7)
 	queue_free()
+	

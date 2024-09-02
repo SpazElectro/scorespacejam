@@ -16,7 +16,6 @@ func _ready():
 func _process(delta):
 	var player_y = World.instance.local_player.position.y
 	var lava_y = position.y
-	var player_speed = World.instance.local_player.current_speed
 	
 	if is_in_space:
 		if abs(lava_y - player_y) >= 700 and abs(gradual_space_increase) >= 100:
@@ -29,18 +28,27 @@ func _process(delta):
 		position.y = player_y + offset_above_player
 		return
 	
-	var distance_to_player = abs(player_y - lava_y)
-	var adjusted_multiplier = speed_multiplier
-	
-	if distance_to_player < slow_down_distance:
-		adjusted_multiplier /= 2
+	# I am very sorry
+	var adjusted_speed = 0
+	if player_y >= 359:
+		adjusted_speed = 10
 	else:
-		adjusted_multiplier *= 2
-	
-	var adjusted_speed = base_speed + -(player_y/10 * adjusted_multiplier * 0.9)
-	adjusted_speed /= 1 if player_speed<=0 else player_speed
-	adjusted_speed = max(adjusted_speed, 100)
-	adjusted_speed = min(adjusted_speed, 1000)
+		var ratio = abs(player_y)/abs(lava_y)
+		var distance = abs(player_y-lava_y)
+		
+		if ratio <= 1.1:
+			if distance >= 800:
+				adjusted_speed = 1200
+			else:
+				if distance >= 300:
+					adjusted_speed = 600
+				else:
+					adjusted_speed = 300
+		else:
+			if distance >= 800:
+				adjusted_speed = 2000*(distance/100)*ratio
+			else:
+				adjusted_speed = 400/ratio
 	
 	position.y -= adjusted_speed * delta
 

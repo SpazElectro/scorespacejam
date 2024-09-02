@@ -97,5 +97,5 @@ offset_right = 300.0
 offset_bottom = 230.0
 text = "WARNING: FREAKY MODE IS ENABLED
 ALL SCORES WILL NOT BE SUBMITTED
-UNTIL THE GAME RESTARTS"
+UNTIL FREAKY MODE IS DISABLED"
 label_settings = SubResource("LabelSettings_553yw")

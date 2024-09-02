@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://spagfytaaui1"]
+[gd_scene load_steps=12 format=3 uid="uid://spagfytaaui1"]
 
 [ext_resource type="Script" path="res://resources/scripts/Player.gd" id="1_5xwv4"]
 [ext_resource type="Texture2D" uid="uid://cwumaytyiaejb" path="res://assets/player/character_0000.png" id="1_ptwvv"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://dk270vwmoxstj" path="res://resources/audio/shotgun.sfxr" id="5_ak3h7"]
 [ext_resource type="AudioStream" uid="uid://w8m4gkopk3q4" path="res://resources/audio/death.sfxr" id="7_khdyp"]
 [ext_resource type="AudioStream" uid="uid://b0emnhthxb01l" path="res://resources/audio/dash.sfxr" id="8_phq6u"]
+[ext_resource type="Texture2D" uid="uid://b27ife5f785eq" path="res://assets/particles/trace_03.png" id="9_ny3i2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_c7c5c"]
 animations = [{
@@ -85,5 +86,19 @@ stream = ExtResource("7_khdyp")
 stream = ExtResource("8_phq6u")
 
 [node name="DashTimer" type="Timer" parent="."]
+
+[node name="Trace03" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-4, 4)
+rotation = 1.57079
+scale = Vector2(0.0800781, 0.0800781)
+texture = ExtResource("9_ny3i2")
+
+[node name="Trace04" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-4, -4)
+rotation = 1.57079
+scale = Vector2(0.0800781, 0.0800781)
+texture = ExtResource("9_ny3i2")
 
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
