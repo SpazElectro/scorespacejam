@@ -60,6 +60,7 @@ var jump_pad_scene: PackedScene = preload("res://resources/scenes/jump_pad.tscn"
 var spawn_point
 
 func _ready():
+	Snowman.SNOWMAN_KILLS = 0
 	instance = self
 	
 	generate_content_below(null, null, 0)
@@ -317,9 +318,9 @@ func update_health():
 	if local_player.health == 0:
 		$UI/DeadMenu/SplashLabel.text = splashes.pick_random()
 		$UI/DeadMenu/Stats.text = $UI/DeadMenu/Stats.text.replace("%snowmen%", str(Snowman.SNOWMAN_KILLS)).replace("%coins%", str(coins)).replace("%time%", convert_time(local_player.time_alive)).replace("%score%", str(int(score)))
+		$UI/Score.visible = false
 		$UI/DeadMenu.visible = true
 		$Lava.set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
-		Snowman.SNOWMAN_KILLS = 0
 
 func on_retry():
 	get_tree().reload_current_scene()

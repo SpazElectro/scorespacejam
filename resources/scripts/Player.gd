@@ -196,8 +196,10 @@ func kill():
 	velocity.y = 0
 	
 	if Shared.get_gamemode() == Shared.GAMEMODE.ENDLESS:
-		Leaderboards._upload_score(World.instance.score)
-		Leaderboards._get_leaderboards()
+		Leaderboards._upload_score("score", int(World.instance.score))
+		Leaderboards._upload_score("coins", int(World.instance.coins))
+		Leaderboards._upload_score("snowman", int(Snowman.SNOWMAN_KILLS))
+		
 	
 	$DeathSound.play()
 

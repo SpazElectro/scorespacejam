@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=4 uid="uid://b7abyjoywj2xi"]
+[gd_scene load_steps=40 format=4 uid="uid://b7abyjoywj2xi"]
 
 [ext_resource type="Texture2D" uid="uid://bx6e0ohnt0shd" path="res://assets/tiles.png" id="1_ex228"]
 [ext_resource type="Script" path="res://resources/scripts/World.gd" id="1_ta3c1"]
@@ -62,6 +62,14 @@ shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_685a3"]
 font = ExtResource("2_xfbyn")
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_tmlcm"]
+font = ExtResource("2_xfbyn")
+font_size = 12
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 5
@@ -470,37 +478,49 @@ offset_bottom = 644.0
 color = Color(1, 0, 0, 0.5)
 
 [node name="Label" type="Label" parent="UI/DeadMenu"]
-offset_top = 138.0
+offset_top = 96.0
 offset_right = 512.0
-offset_bottom = 181.0
+offset_bottom = 139.0
 text = "You Died!"
 label_settings = SubResource("LabelSettings_eqyxv")
 horizontal_alignment = 1
 
 [node name="SplashLabel" type="Label" parent="UI/DeadMenu"]
-offset_top = 166.0
+offset_top = 124.0
 offset_right = 512.0
-offset_bottom = 224.0
+offset_bottom = 182.0
 text = "😀😀😀hello :3 polygon do nat"
 label_settings = SubResource("LabelSettings_685a3")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Stats" type="Label" parent="UI/DeadMenu"]
-offset_top = 250.0
-offset_right = 272.0
-offset_bottom = 453.0
+offset_left = -1.0
+offset_top = 165.0
+offset_right = 511.0
+offset_bottom = 250.0
 text = "Your score is %score%
 You collected %coins% coin(s)
 You lived for %time%
 You killed %snowmen% snowmen"
-label_settings = SubResource("LabelSettings_685a3")
+label_settings = SubResource("LabelSettings_tmlcm")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Leaderboard" parent="UI/DeadMenu" instance=ExtResource("8_01j2r")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 250.0
+offset_bottom = 250.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="Button" type="Button" parent="UI/DeadMenu"]
 offset_left = 91.0
-offset_top = 474.0
+offset_top = 56.0
 offset_right = 401.0
-offset_bottom = 514.0
+offset_bottom = 96.0
 theme = ExtResource("7_pafxl")
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("2_xfbyn")
@@ -510,26 +530,15 @@ text = "Retry"
 
 [node name="Button2" type="Button" parent="UI/DeadMenu"]
 offset_left = 91.0
-offset_top = 530.0
+offset_top = 1.0
 offset_right = 401.0
-offset_bottom = 570.0
+offset_bottom = 41.0
 theme = ExtResource("7_pafxl")
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("2_xfbyn")
 theme_override_font_sizes/font_size = 36
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ma02g")
 text = "Main Menu"
-
-[node name="Leaderboard" parent="UI/DeadMenu" instance=ExtResource("8_01j2r")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 310.0
-offset_top = 250.0
-offset_right = 310.0
-offset_bottom = 250.0
-grow_horizontal = 1
-grow_vertical = 1
 
 [node name="PauseMenu" type="Node2D" parent="UI"]
 visible = false

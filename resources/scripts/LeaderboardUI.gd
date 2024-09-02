@@ -1,6 +1,6 @@
 extends Control
 
-@onready var template = $ScrollContainer/VBoxContainer/Template
+@onready var template = $Template
 
 func format_number_with_commas(number: int) -> String:
 	var number_str = str(number)
@@ -16,8 +16,8 @@ func format_number_with_commas(number: int) -> String:
 	
 	return result
 
-func _ready():
-	var data = await Leaderboards._get_leaderboards()
+func init_board(key: String):
+	var data = await Leaderboards._get_leaderboards(key)
 	
 	if data:
 		var items = data.items
@@ -36,5 +36,12 @@ func _ready():
 				elif i == 2:
 					# third place
 					e.add_theme_color_override("font_color", Color(0.6, 0.3, 0, 1))
-				template.get_parent().add_child(e)
+				get_node(key).get_node("VBoxContainer").add_child(e)
 				i += 1
+
+func _ready():
+	await get_tree().create_timer(3.0).timeout
+	
+	init_board("score")
+	init_board("coins")
+	init_board("snowman")

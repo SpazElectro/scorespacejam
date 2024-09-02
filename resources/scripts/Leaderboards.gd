@@ -4,7 +4,6 @@ extends Node
 
 var game_API_key = "dev_abda0ec58a954d5c980b26c5edc08f9c"
 var development_mode = true
-var leaderboard_key = "score"
 var session_token = ""
 
 var authenticated = false
@@ -52,7 +51,7 @@ func _authentication_request():
 	auth_http.queue_free()
 	authenticated = true
 
-func _get_leaderboards(tries=0):
+func _get_leaderboards(leaderboard_key="score", tries=0):
 	if not authenticated:
 		await get_tree().process_frame
 		await get_tree().process_frame
@@ -77,17 +76,17 @@ func _get_leaderboards(tries=0):
 	
 	if response_code == 403:
 		print("Forbidden request.")
-		return await _get_leaderboards(tries+1)
+		return await _get_leaderboards(leaderboard_key, tries+1)
 	
 	var json = JSON.new()
 	var parse_result = json.parse(body.get_string_from_utf8())
 	if parse_result != OK:
 		print("Failed to parse JSON.")
-		return await _get_leaderboards(tries+1)
+		return await _get_leaderboards(leaderboard_key, tries+1)
 	
 	return json.get_data()
 
-func _upload_score(score: int):
+func _upload_score(leaderboard_key: String, score: int):
 	if Shared.freaky_mode or Shared.cheats_enabled:
 		return
 	var data = { "score": str(score) }

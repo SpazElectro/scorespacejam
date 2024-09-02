@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://doy1v1jerro7i"]
+[gd_scene load_steps=5 format=3 uid="uid://doy1v1jerro7i"]
 
 [ext_resource type="FontFile" uid="uid://dcy4tcp1un3hm" path="res://assets/VCR_OSD_MONO_1.001.ttf" id="1_bli5l"]
 [ext_resource type="Script" path="res://resources/scripts/LeaderboardUI.gd" id="1_g6ebi"]
@@ -6,6 +6,12 @@
 [sub_resource type="LabelSettings" id="LabelSettings_3i3si"]
 font = ExtResource("1_bli5l")
 font_size = 32
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wg6ic"]
+font = ExtResource("1_bli5l")
+font_size = 25
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
@@ -18,35 +24,94 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_g6ebi")
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_right = 206.0
-offset_bottom = 29.0
-text = "Leaderboard"
-label_settings = SubResource("LabelSettings_3i3si")
-
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
-layout_mode = 0
-offset_top = 30.0
-offset_right = 206.0
-offset_bottom = 358.0
-vertical_scroll_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
-layout_mode = 2
-
-[node name="Template" type="Label" parent="ScrollContainer/VBoxContainer"]
+[node name="Template" type="Label" parent="."]
 visible = false
 layout_mode = 2
+offset_top = 30.0
+offset_right = 131.0
+offset_bottom = 59.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("1_bli5l")
 theme_override_font_sizes/font_size = 32
 text = "150,000"
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 206.0
+offset_bottom = 29.0
+text = "Score"
+label_settings = SubResource("LabelSettings_3i3si")
+
+[node name="score" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_top = 30.0
+offset_right = 180.0
+offset_bottom = 358.0
+vertical_scroll_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="score"]
+layout_mode = 2
+
+[node name="Separator" type="ColorRect" parent="."]
 layout_mode = 0
 offset_top = 29.0
-offset_right = 206.0
+offset_right = 180.0
+offset_bottom = 33.0
+color = Color(0.505882, 0.505882, 0.505882, 1)
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 180.0
+offset_right = 386.0
+offset_bottom = 29.0
+text = "Coins"
+label_settings = SubResource("LabelSettings_3i3si")
+
+[node name="coins" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 180.0
+offset_top = 30.0
+offset_right = 360.0
+offset_bottom = 358.0
+vertical_scroll_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="coins"]
+layout_mode = 2
+
+[node name="Separator2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 180.0
+offset_top = 29.0
+offset_right = 360.0
+offset_bottom = 33.0
+color = Color(0.505882, 0.505882, 0.505882, 1)
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 0
+offset_left = 321.0
+offset_right = 512.0
+offset_bottom = 29.0
+text = "Snowman Kills"
+label_settings = SubResource("LabelSettings_wg6ic")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="snowman" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 360.0
+offset_top = 30.0
+offset_right = 512.0
+offset_bottom = 358.0
+vertical_scroll_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="snowman"]
+layout_mode = 2
+
+[node name="Separator3" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 360.0
+offset_top = 29.0
+offset_right = 512.0
 offset_bottom = 33.0
 color = Color(0.505882, 0.505882, 0.505882, 1)
