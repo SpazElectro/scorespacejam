@@ -70,6 +70,10 @@ func _ready():
 		local_player.position = spawn_point
 	if Shared.get_gamemode() == Shared.GAMEMODE.NORMAL:
 		chunk_size = 800
+	
+	if Shared.is_mobile:
+		$UI/MobileJump.show()
+		$UI/MobileDash.show()
 
 @export var snowman_tile: PackedScene
 
@@ -283,12 +287,14 @@ func create_platform(x: int, y: int, width: int):
 		if jump_pad_cooldown > 0:
 			jump_pad_cooldown -= 1
 			continue
-		
-		var pad = jump_pad_scene.instantiate()
-		pad.global_position = tilemap_layer.to_global(tilemap_layer.map_to_local(Vector2i(t[0], t[1])))
-		pad.global_position.y -= 36
-		jump_pads_container.add_child(pad)
-		jump_pad_cooldown = 3
+		if randi_range(0, 10) >= 8:
+			var pad = jump_pad_scene.instantiate()
+			pad.global_position = tilemap_layer.to_global(tilemap_layer.map_to_local(Vector2i(t[0], t[1])))
+			pad.global_position.y -= 36
+			jump_pads_container.add_child(pad)
+			jump_pad_cooldown = 10
+		else:
+			continue
 	
 	return coin.global_position
 
@@ -321,3 +327,16 @@ func _on_play_pressed():
 
 func _on_button_2_pressed():
 	_on_play_pressed()
+
+func _on_mobile_jump_button_down():
+	local_player.jump_down = true
+	local_player._jump_press = true
+	local_player._jump_release = false
+
+func _on_mobile_jump_button_up():
+	local_player._jump_release = true
+	local_player._jump_press = false
+	local_player.jump_down = false
+
+func _on_mobile_dash_pressed():
+	local_player.dash_press = true

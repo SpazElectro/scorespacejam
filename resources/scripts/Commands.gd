@@ -52,8 +52,8 @@ func nextsong():
 func lava(x):
 	Console.print_line("The lava is at %d" % [World.instance.get_node("Lava").position.y])
 	x = int(x)
-	if x:
-		World.instance.get_node("Lava").base_speed = x
-
+	if x != null:
+		World.instance.get_node("Lava").process_mode = Node.PROCESS_MODE_DISABLED if x == 0 else Node.PROCESS_MODE_INHERIT
+		Console.print_line("New process mode: %s" % [str(World.instance.get_node("Lava").process_mode)])
 func player():
 	Console.print_line("The player is at %d" % [World.instance.local_player.position.y])

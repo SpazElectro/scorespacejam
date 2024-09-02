@@ -73,7 +73,7 @@ func _ready() -> void:
 	if not DisplayServer.is_touchscreen_available() and visibility_mode == Visibility_mode.TOUCHSCREEN_ONLY:
 		hide()
 	else:
-		if OS.get_name() == "Android" or OS.is_debug_build():
+		if Shared.is_mobile:
 			show()
 	
 	if visibility_mode == Visibility_mode.WHEN_TOUCHED:

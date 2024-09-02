@@ -483,8 +483,24 @@ scale = Vector2(0.5, 0.5)
 visibility_mode = 1
 action_left = "left"
 action_right = "right"
-action_up = "jump"
-action_down = "dash"
+
+[node name="MobileJump" type="Button" parent="UI"]
+visible = false
+offset_left = 316.0
+offset_top = 514.0
+offset_right = 373.0
+offset_bottom = 562.0
+scale = Vector2(1.5, 1.5)
+text = "Jump"
+
+[node name="MobileDash" type="Button" parent="UI"]
+visible = false
+offset_left = 413.0
+offset_top = 514.0
+offset_right = 470.0
+offset_bottom = 562.0
+scale = Vector2(1.5, 1.5)
+text = "Dash"
 
 [node name="Health" type="Node2D" parent="UI"]
 visible = false
@@ -719,6 +735,9 @@ visible = false
 position = Vector2(256, 18)
 shape = SubResource("RectangleShape2D_sama4")
 
+[connection signal="button_down" from="UI/MobileJump" to="." method="_on_mobile_jump_button_down"]
+[connection signal="button_up" from="UI/MobileJump" to="." method="_on_mobile_jump_button_up"]
+[connection signal="pressed" from="UI/MobileDash" to="." method="_on_mobile_dash_pressed"]
 [connection signal="pressed" from="UI/DeadMenu/Button" to="." method="on_retry"]
 [connection signal="pressed" from="UI/DeadMenu/Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="FadeLayer/ThankYou/Play" to="." method="_on_play_pressed"]
