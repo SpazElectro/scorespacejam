@@ -46,7 +46,7 @@ label_settings = SubResource("LabelSettings_3i3si")
 [node name="score" type="ScrollContainer" parent="."]
 layout_mode = 0
 offset_top = 30.0
-offset_right = 180.0
+offset_right = 200.0
 offset_bottom = 358.0
 vertical_scroll_mode = 2
 

@@ -57,5 +57,7 @@ func get_mus_vol() -> float:
 	return 20 * (log(normalized_volume) / log(10))
 func set_aud_vol(new: float):
 	config.set_value("Audio", "audio", new)
+	_save_settings()
 func set_mus_vol(new: float):
 	config.set_value("Audio", "music", new)
+	_save_settings()

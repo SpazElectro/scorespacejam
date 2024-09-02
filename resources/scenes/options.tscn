@@ -71,15 +71,6 @@ offset_bottom = 8.0
 text = "Music"
 label_settings = SubResource("LabelSettings_bgir4")
 
-[node name="Cheats" type="CheckButton" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 394.0
-offset_top = 554.0
-offset_right = 506.0
-offset_bottom = 585.0
-text = "Cheats"
-
 [node name="Leaderboard" parent="." instance=ExtResource("4_rvp2b")]
 process_mode = 4
 visible = false
@@ -89,6 +80,15 @@ offset_top = 226.0
 offset_right = 4.0
 offset_bottom = 226.0
 scale = Vector2(0.9, 0.9)
+
+[node name="Cheats" type="CheckButton" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 394.0
+offset_top = 554.0
+offset_right = 506.0
+offset_bottom = 585.0
+text = "Cheats"
 
 [node name="FreakyWarning" type="Label" parent="."]
 visible = false
