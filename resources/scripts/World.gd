@@ -39,7 +39,8 @@ var splashes = [
 	"fun fact: this was almost a zombie game",
 	"KILL THE SNOWMEN!!!",
 	"ITS THE SNOWMENS FAULT!!",
-	"jesse we need to cook jesse"
+	"jesse we need to cook jesse",
+	"skill issue"
 ]
 
 var coins = 0
@@ -314,7 +315,7 @@ func on_player_died():
 func on_retry():
 	get_tree().reload_current_scene()
 
-# help what was this??
+# this is the main menu button
 func _on_play_pressed():
 	get_tree().change_scene_to_packed(Commands.main_menu)
 

@@ -88,6 +88,7 @@ offset_left = 4.0
 offset_top = 226.0
 offset_right = 4.0
 offset_bottom = 226.0
+scale = Vector2(0.9, 0.9)
 
 [node name="FreakyWarning" type="Label" parent="."]
 visible = false

@@ -62,17 +62,17 @@ color = Color(0.505882, 0.505882, 0.505882, 1)
 
 [node name="Label2" type="Label" parent="."]
 layout_mode = 0
-offset_left = 180.0
-offset_right = 386.0
+offset_left = 200.0
+offset_right = 406.0
 offset_bottom = 29.0
 text = "Coins"
 label_settings = SubResource("LabelSettings_3i3si")
 
 [node name="coins" type="ScrollContainer" parent="."]
 layout_mode = 0
-offset_left = 180.0
+offset_left = 200.0
 offset_top = 30.0
-offset_right = 360.0
+offset_right = 380.0
 offset_bottom = 358.0
 vertical_scroll_mode = 2
 
@@ -81,16 +81,16 @@ layout_mode = 2
 
 [node name="Separator2" type="ColorRect" parent="."]
 layout_mode = 0
-offset_left = 180.0
+offset_left = 200.0
 offset_top = 29.0
-offset_right = 360.0
+offset_right = 380.0
 offset_bottom = 33.0
 color = Color(0.505882, 0.505882, 0.505882, 1)
 
 [node name="Label3" type="Label" parent="."]
 layout_mode = 0
-offset_left = 321.0
-offset_right = 512.0
+offset_left = 359.0
+offset_right = 550.0
 offset_bottom = 29.0
 text = "Snowman Kills"
 label_settings = SubResource("LabelSettings_wg6ic")
@@ -99,9 +99,9 @@ vertical_alignment = 1
 
 [node name="snowman" type="ScrollContainer" parent="."]
 layout_mode = 0
-offset_left = 360.0
+offset_left = 400.0
 offset_top = 30.0
-offset_right = 512.0
+offset_right = 552.0
 offset_bottom = 358.0
 vertical_scroll_mode = 2
 
@@ -110,8 +110,8 @@ layout_mode = 2
 
 [node name="Separator3" type="ColorRect" parent="."]
 layout_mode = 0
-offset_left = 360.0
+offset_left = 400.0
 offset_top = 29.0
-offset_right = 512.0
+offset_right = 552.0
 offset_bottom = 33.0
 color = Color(0.505882, 0.505882, 0.505882, 1)

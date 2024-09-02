@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=4 uid="uid://b7abyjoywj2xi"]
+[gd_scene load_steps=42 format=4 uid="uid://b7abyjoywj2xi"]
 
 [ext_resource type="Texture2D" uid="uid://bx6e0ohnt0shd" path="res://assets/tiles.png" id="1_ex228"]
 [ext_resource type="Script" path="res://resources/scripts/World.gd" id="1_ta3c1"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://b4lchj0lge652" path="res://assets/backgrounds/backgroundForest.png" id="10_x3c8t"]
 [ext_resource type="Texture2D" uid="uid://3n8414wjvhkb" path="res://assets/particles/trace_01.png" id="11_3b3vg"]
 [ext_resource type="Texture2D" uid="uid://clu4xa2ymfhaw" path="res://assets/particles/star_01.png" id="12_7rbku"]
+[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="14_lyxcf"]
 
 [sub_resource type="Environment" id="Environment_e0sfn"]
 background_mode = 3
@@ -50,40 +51,6 @@ outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 5
 shadow_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_eqyxv"]
-font = ExtResource("2_xfbyn")
-font_size = 48
-font_color = Color(1, 0, 0, 1)
-outline_size = 5
-outline_color = Color(0, 0, 0, 1)
-shadow_size = 5
-shadow_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_685a3"]
-font = ExtResource("2_xfbyn")
-outline_size = 5
-outline_color = Color(0, 0, 0, 1)
-shadow_size = 5
-shadow_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_tmlcm"]
-font = ExtResource("2_xfbyn")
-font_size = 21
-outline_size = 5
-outline_color = Color(0, 0, 0, 1)
-shadow_size = 5
-shadow_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_ok6um"]
-font = ExtResource("2_xfbyn")
-font_size = 24
-outline_size = 5
-outline_color = Color(0, 0, 0, 1)
-shadow_size = 5
-shadow_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ma02g"]
 
 [sub_resource type="Curve" id="Curve_7rghk"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 1.4, 0.0, 0, 0]
@@ -124,6 +91,40 @@ scale_max = 0.05
 scale_curve = SubResource("CurveTexture_pkum7")
 hue_variation_min = -0.1
 hue_variation_max = 0.1
+
+[sub_resource type="LabelSettings" id="LabelSettings_eqyxv"]
+font = ExtResource("2_xfbyn")
+font_size = 48
+font_color = Color(1, 0, 0, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_685a3"]
+font = ExtResource("2_xfbyn")
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_tmlcm"]
+font = ExtResource("2_xfbyn")
+font_size = 21
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ok6um"]
+font = ExtResource("2_xfbyn")
+font_size = 24
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ma02g"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ax2yi"]
 font_size = 48
@@ -409,6 +410,22 @@ environment = SubResource("Environment_e0sfn")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
+[node name="ParallaxBackground" type="ParallaxBackground" parent="UI"]
+
+[node name="BackgroundColorFall" type="Sprite2D" parent="UI/ParallaxBackground"]
+visible = false
+position = Vector2(256, 320)
+texture = ExtResource("7_lpjx1")
+
+[node name="BackgroundColorForest" type="Sprite2D" parent="UI/ParallaxBackground"]
+position = Vector2(256, 320)
+texture = ExtResource("8_o23l3")
+
+[node name="BackgroundForest" type="Sprite2D" parent="UI/ParallaxBackground"]
+visible = false
+position = Vector2(256, 320)
+texture = ExtResource("10_x3c8t")
+
 [node name="Score" type="Label" parent="UI"]
 offset_right = 512.0
 offset_bottom = 29.0
@@ -435,21 +452,39 @@ offset_bottom = 59.0
 text = "0.0"
 label_settings = SubResource("LabelSettings_fwlaf")
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="UI"]
-
-[node name="BackgroundColorFall" type="Sprite2D" parent="UI/ParallaxBackground"]
+[node name="Destination" type="Sprite2D" parent="UI"]
 visible = false
-position = Vector2(256, 320)
-texture = ExtResource("7_lpjx1")
+position = Vector2(247, 50)
+scale = Vector2(1.40625, 1.40625)
+texture = ExtResource("10_lxm8u")
 
-[node name="BackgroundColorForest" type="Sprite2D" parent="UI/ParallaxBackground"]
-position = Vector2(256, 320)
-texture = ExtResource("8_o23l3")
+[node name="GPUParticles2D" type="GPUParticles2D" parent="UI"]
+position = Vector2(256, 660)
+amount = 256
+process_material = SubResource("ParticleProcessMaterial_krpny")
+texture = ExtResource("11_3b3vg")
+lifetime = 1.15
+fixed_fps = 60
 
-[node name="BackgroundForest" type="Sprite2D" parent="UI/ParallaxBackground"]
+[node name="Stars" type="GPUParticles2D" parent="UI"]
+position = Vector2(256, 330)
+emitting = false
+amount = 256
+process_material = SubResource("ParticleProcessMaterial_4eysu")
+texture = ExtResource("12_7rbku")
+lifetime = 5.0
+fixed_fps = 60
+
+[node name="Joystick" parent="UI" instance=ExtResource("14_lyxcf")]
 visible = false
-position = Vector2(256, 320)
-texture = ExtResource("10_x3c8t")
+offset_top = -151.0
+offset_bottom = 149.0
+scale = Vector2(0.5, 0.5)
+visibility_mode = 1
+action_left = "left"
+action_right = "right"
+action_up = "jump"
+action_down = "dash"
 
 [node name="Health" type="Node2D" parent="UI"]
 visible = false
@@ -486,26 +521,26 @@ offset_bottom = 644.0
 color = Color(1, 0, 0, 0.5)
 
 [node name="Label" type="Label" parent="UI/DeadMenu"]
-offset_top = 96.0
+offset_top = 32.0
 offset_right = 512.0
-offset_bottom = 139.0
+offset_bottom = 75.0
 text = "You Died!"
 label_settings = SubResource("LabelSettings_eqyxv")
 horizontal_alignment = 1
 
 [node name="SplashLabel" type="Label" parent="UI/DeadMenu"]
-offset_top = 124.0
+offset_top = 60.0
 offset_right = 512.0
-offset_bottom = 182.0
+offset_bottom = 118.0
 text = "😀😀😀hello :3 polygon do nat"
 label_settings = SubResource("LabelSettings_685a3")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Stats" type="Label" parent="UI/DeadMenu"]
-offset_top = 165.0
+offset_top = 101.0
 offset_right = 517.0
-offset_bottom = 262.0
+offset_bottom = 198.0
 text = "Your score is %score%
 You collected %coins% coin%coinplural%
 You lived for %time%
@@ -545,10 +580,10 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_ma02g")
 text = "Retry"
 
 [node name="Button2" type="Button" parent="UI/DeadMenu"]
-offset_left = 108.0
-offset_top = 29.0
-offset_right = 418.0
-offset_bottom = 69.0
+offset_left = 86.0
+offset_top = 226.0
+offset_right = 396.0
+offset_bottom = 266.0
 theme = ExtResource("7_pafxl")
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("2_xfbyn")
@@ -565,29 +600,6 @@ offset_bottom = 640.0
 color = Color(0, 0, 0, 0.5)
 
 [node name="Options" parent="UI/PauseMenu" instance=ExtResource("7_dmf4e")]
-
-[node name="Destination" type="Sprite2D" parent="UI"]
-visible = false
-position = Vector2(247, 50)
-scale = Vector2(1.40625, 1.40625)
-texture = ExtResource("10_lxm8u")
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="UI"]
-position = Vector2(256, 660)
-amount = 256
-process_material = SubResource("ParticleProcessMaterial_krpny")
-texture = ExtResource("11_3b3vg")
-lifetime = 1.15
-fixed_fps = 60
-
-[node name="Stars" type="GPUParticles2D" parent="UI"]
-position = Vector2(256, 330)
-emitting = false
-amount = 256
-process_material = SubResource("ParticleProcessMaterial_4eysu")
-texture = ExtResource("12_7rbku")
-lifetime = 5.0
-fixed_fps = 60
 
 [node name="FadeLayer" type="CanvasLayer" parent="."]
 visible = false

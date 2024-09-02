@@ -25,6 +25,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var is_jumping = false
 var jump_time = 0.0
 var time_alive = 0.0
+var load_sound_played = false
 
 func _process(delta):
 	if not is_on_floor():
@@ -58,6 +59,7 @@ func _process(delta):
 				jump_time = 0.0
 				velocity.y -= jump_force * jmp * delta
 				jumps += 1
+				$JumpSound.play()
 		elif Input.is_action_pressed("jump") and is_jumping:
 			jump_time += delta
 			if jump_time < max_jump_time:
@@ -131,8 +133,13 @@ func _process(delta):
 			await get_tree().process_frame
 			await get_tree().process_frame
 			$Weapon/Muzzle.visible = false
+			load_sound_played = false
 		if _shoot_timer > 0:
 			_shoot_timer -= delta
+		else:
+			if not load_sound_played:
+				$ShotgunLoadedSound.play()
+				load_sound_played = true
 		
 		# so the player doesn't get launched into space immediately
 		if Time.get_ticks_msec() % 1000 <= 10:

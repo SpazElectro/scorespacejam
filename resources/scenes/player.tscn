@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://spagfytaaui1"]
+[gd_scene load_steps=14 format=3 uid="uid://spagfytaaui1"]
 
 [ext_resource type="Script" path="res://resources/scripts/Player.gd" id="1_5xwv4"]
 [ext_resource type="Texture2D" uid="uid://cwumaytyiaejb" path="res://assets/player/character_0000.png" id="1_ptwvv"]
@@ -6,8 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://bbadfmvj7mw4f" path="res://assets/weapons/shotgun.png" id="4_a7b3o"]
 [ext_resource type="Texture2D" uid="uid://bu7eejjy28dqp" path="res://assets/shotLarge.png" id="5_15512"]
 [ext_resource type="AudioStream" uid="uid://dk270vwmoxstj" path="res://resources/audio/shotgun.sfxr" id="5_ak3h7"]
+[ext_resource type="AudioStream" uid="uid://ce1wdecllvwob" path="res://resources/audio/shotgun_loaded.sfxr" id="7_aya2n"]
 [ext_resource type="AudioStream" uid="uid://w8m4gkopk3q4" path="res://resources/audio/death.sfxr" id="7_khdyp"]
 [ext_resource type="AudioStream" uid="uid://b0emnhthxb01l" path="res://resources/audio/dash.sfxr" id="8_phq6u"]
+[ext_resource type="AudioStream" uid="uid://m0dux5abuy8s" path="res://resources/audio/jump.sfxr" id="9_8idj0"]
 [ext_resource type="Texture2D" uid="uid://b27ife5f785eq" path="res://assets/particles/trace_03.png" id="9_ny3i2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_c7c5c"]
@@ -79,11 +81,17 @@ texture = ExtResource("5_15512")
 [node name="ShotgunSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_ak3h7")
 
+[node name="ShotgunLoadedSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_aya2n")
+
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_khdyp")
 
 [node name="DashSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_phq6u")
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_8idj0")
 
 [node name="DashTimer" type="Timer" parent="."]
 
